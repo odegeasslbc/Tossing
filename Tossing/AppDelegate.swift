@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,10 +14,97 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
+    enum ShortcutType: String {
+        case quick = "com.bruce.product.Tosse-It.quickTosse"
+        case add = "com.bruce.product.Tosse-It.addNew"
     }
+    
+    private func initDB(){
+        let defaultManager = NSFileManager.defaultManager()
+        dbFilePath = defaultManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!.URLByAppendingPathComponent("tosse.db").path!
+        print(dbFilePath)
+        
+        let dbListCreateStatements = "CREATE TABLE IF NOT EXISTS LISTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT)";
+        let dbItemCreateStatements = "CREATE TABLE IF NOT EXISTS ITEMS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, HOST TEXT)";
+        
+        
+        let personDB = FMDatabase(path: dbFilePath)
+        
+        if personDB == nil{
+            print("Error:\(personDB.lastErrorMessage())")
+        }else{
+            if personDB.open(){
+                if !personDB.executeStatements(dbListCreateStatements){
+                    print("Error:\(personDB.lastErrorMessage())")
+                }
+                if !personDB.executeStatements(dbItemCreateStatements){
+                    print("Error:\(personDB.lastErrorMessage())")
+                }
+            }
+            personDB.close()
+        }
+    }
+
+    func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        var handled = false
+        //Get type string from shortcutItem
+        if let shortcutType = ShortcutType.init(rawValue: shortcutItem.type) {
+            
+            switch shortcutType {
+            case .quick:
+                
+                let db = FMDatabase(path: dbFilePath)
+                guard db.open() else {
+                    print("Error:\(db.lastErrorMessage())")
+                    return handled
+                }
+                
+                let queryPersonStatement = "SELECT * FROM LISTS"
+                var title = ""
+                lists.removeAll(keepCapacity: false)
+                if let resultSet = db.executeQuery(queryPersonStatement,withArgumentsInArray: nil){
+                    while resultSet.next(){
+                        title = resultSet.stringForColumn("TITLE")
+                        lists.append(title)
+                    }
+                }
+                db.close()
+                print(title)
+                let detailVC = DetailViewController(title: title)
+                window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+                window?.rootViewController?.presentViewController(detailVC, animated: false, completion: nil)
+                handled = true
+            case .add:
+                let addVC = AddNewViewController()
+                window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+                window?.rootViewController?.presentViewController(addVC, animated: false, completion: nil)
+                handled = true
+            }
+        }
+        return handled
+    }
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?)-> Bool {
+        
+        initDB()
+        var launchedFromShortcut = false
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+            launchedFromShortcut = true
+            handleShortCutItem(shortcutItem)
+        }
+        
+        //Return false incase application was lanched from shorcut to prevent
+        //application(_:performActionForShortcutItem:completionHandler:) from being called
+        return launchedFromShortcut
+    }
+    
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        
+        initDB()
+        let handledShortCutItem = handleShortCutItem(shortcutItem)
+        completionHandler(handledShortCutItem)
+    }
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -41,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        self.saveContext()
+        //self.saveContext()
     }
 
     // MARK: - Core Data stack
@@ -52,6 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return urls[urls.count-1]
     }()
 
+    /*
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = NSBundle.mainBundle().URLForResource("Tossing", withExtension: "momd")!
@@ -106,6 +193,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    */
 
 }
 
