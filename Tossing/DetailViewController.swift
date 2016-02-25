@@ -107,6 +107,8 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         stackView_stack.bringSubviewToFront(self.btn_add)
         textField.borderStyle = UITextBorderStyle.RoundedRect
         
+        self.resultView?.hide()
+        
         UIView.animateWithDuration(0.3, animations: {
             textField.frame = CGRectMake(30, screen.height/2, screen.width-160, 50)
             self.btn_add.frame = CGRectMake(screen.width-110, screen.height/2, 80,50)
@@ -154,7 +156,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     }
 
     func backToList(){
-        
+        self.resultView?.removeFromSuperview()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -203,6 +205,12 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func get(){
+        
+        if(getCounts == 1){
+
+            self.view.addSubview(resultView!)
+        }
+        
         getItems()
         
         let t = items.count
@@ -266,74 +274,72 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     
     self.view.backgroundColor = UIColor.whiteColor()
     
-    uiview_blockView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-    
-    //allocate all the positions in stack view
-    stackView_stack.frame = self.view.frame
-    btn_list.center.x = stackView_stack.frame.width - 50
-    //table_listTable.center.x = stackView_stack.center.x
-    
-    btn_list.setTitle("List", forState: UIControlState.Normal)
-    btn_list.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-    btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
-    btn_list.backgroundColor = UIColor.clearColor()
-    btn_list.addTarget(self, action: "btnAnime", forControlEvents: UIControlEvents.TouchDown)
-    btn_list.addTarget(self, action: "stopAnime", forControlEvents: UIControlEvents.TouchDragExit)
-    btn_list.addTarget(self, action: "backToList", forControlEvents: UIControlEvents.TouchUpInside)
-    stackView_stack.addSubview(btn_list)
-    
-    label_title.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
-    label_title.backgroundColor = UIColor.clearColor()
-    label_title.textColor = UIColor.grayColor()
-    label_title.adjustsFontSizeToFitWidth = true
-    stackView_stack.addSubview(label_title)
-    
-    table_itemTable.backgroundColor = UIColor.whiteColor()
-    table_itemTable.dataSource = self
-    table_itemTable.delegate = self
-    table_itemTable.separatorStyle = UITableViewCellSeparatorStyle.None
-    stackView_stack.addSubview(table_itemTable)
-    
-    textField_newItem.backgroundColor = UIColor.whiteColor()
-    textField_newItem.clearButtonMode = UITextFieldViewMode.WhileEditing
-    textField_newItem.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
-    textField_newItem.delegate = self
-    textField_newItem.placeholder = "New Item"
-    textField_newItem.adjustsFontSizeToFitWidth = true
-    stackView_stack.addSubview(textField_newItem)
-    
-    btn_add.backgroundColor=UIColor.clearColor()
-    btn_add.layer.cornerRadius = 5
-    btn_add.setTitle("Add", forState: UIControlState.Normal)
-    btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-    btn_add.setTitleColor(UIColor.redColor(), forState: UIControlState.Highlighted)
-    btn_add.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
-    btn_add.addTarget(self, action: "add", forControlEvents: UIControlEvents.TouchUpInside)
-    stackView_stack.addSubview(btn_add)
-    
-    btn_get.backgroundColor=UIColor.clearColor()
-    btn_get.setTitle("GET", forState: UIControlState.Normal)
-    btn_get.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-    btn_get.setTitleColor(UIColor.redColor(), forState: UIControlState.Highlighted)
-    btn_get.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 60)
-    btn_get.addTarget(self, action: "get", forControlEvents: UIControlEvents.TouchUpInside)
-    stackView_stack.addSubview(btn_get)
-    
-    self.view.addSubview(stackView_stack)
+        uiview_blockView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         
+        //allocate all the positions in stack view
+        stackView_stack.frame = self.view.frame
+        btn_list.center.x = stackView_stack.frame.width - 50
+        //table_listTable.center.x = stackView_stack.center.x
+        
+        btn_list.setTitle("List", forState: UIControlState.Normal)
+        btn_list.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
+        btn_list.backgroundColor = UIColor.clearColor()
+        btn_list.addTarget(self, action: "btnAnime", forControlEvents: UIControlEvents.TouchDown)
+        btn_list.addTarget(self, action: "stopAnime", forControlEvents: UIControlEvents.TouchDragExit)
+        btn_list.addTarget(self, action: "backToList", forControlEvents: UIControlEvents.TouchUpInside)
+        stackView_stack.addSubview(btn_list)
+        
+        label_title.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
+        label_title.backgroundColor = UIColor.clearColor()
+        label_title.textColor = UIColor.grayColor()
+        label_title.adjustsFontSizeToFitWidth = true
+        stackView_stack.addSubview(label_title)
+        
+        table_itemTable.backgroundColor = UIColor.whiteColor()
+        table_itemTable.dataSource = self
+        table_itemTable.delegate = self
+        table_itemTable.separatorStyle = UITableViewCellSeparatorStyle.None
+        stackView_stack.addSubview(table_itemTable)
+        
+        textField_newItem.backgroundColor = UIColor.whiteColor()
+        textField_newItem.clearButtonMode = UITextFieldViewMode.WhileEditing
+        textField_newItem.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
+        textField_newItem.delegate = self
+        textField_newItem.placeholder = "New Item"
+        textField_newItem.adjustsFontSizeToFitWidth = true
+        stackView_stack.addSubview(textField_newItem)
+        
+        btn_add.backgroundColor=UIColor.clearColor()
+        btn_add.layer.cornerRadius = 5
+        btn_add.setTitle("Add", forState: UIControlState.Normal)
+        btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        btn_add.setTitleColor(UIColor.redColor(), forState: UIControlState.Highlighted)
+        btn_add.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
+        btn_add.addTarget(self, action: "add", forControlEvents: UIControlEvents.TouchUpInside)
+        stackView_stack.addSubview(btn_add)
+        
+        btn_get.backgroundColor=UIColor.clearColor()
+        btn_get.setTitle("GET", forState: UIControlState.Normal)
+        btn_get.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        btn_get.setTitleColor(UIColor.redColor(), forState: UIControlState.Highlighted)
+        btn_get.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 60)
+        btn_get.addTarget(self, action: "get", forControlEvents: UIControlEvents.TouchUpInside)
+        stackView_stack.addSubview(btn_get)
+        
+        self.view.addSubview(stackView_stack)
+    
         let frame = table_itemTable.frame
         let initFrame = CGRectMake(frame.minX, -frame.height, frame.width, frame.height)
         resultView = ResultView(initFrame: initFrame, finalFrame: frame)
-        self.view.addSubview(resultView!)
-    
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    self.view.endEditing(true)
+        self.view.endEditing(true)
     }
     
     override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
+        super.didReceiveMemoryWarning()
     
     // Dispose of any resources that can be recreated.
     }

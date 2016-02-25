@@ -415,6 +415,7 @@ extension LTMorphingLabel {
     }
     
     override public func drawTextInRect(rect: CGRect) {
+        self.adjustsFontSizeToFitWidth = true
         for charLimbo in limboOfCharacters() {
             let charRect:CGRect = charLimbo.rect
             

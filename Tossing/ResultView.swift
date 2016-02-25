@@ -8,6 +8,8 @@
 
 import UIKit
 
+let red = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 1)
+
 class ResultView: UIView {
     
     var initFrame:CGRect?
@@ -42,34 +44,41 @@ class ResultView: UIView {
         
         self.backgroundColor = UIColor.whiteColor()
         
-        label_result = LTMorphingLabel(frame: CGRectMake(15, 60, width-30, height-110))
+        label_result = LTMorphingLabel(frame: CGRectMake(15, 0, width-25, height-70))
         label_result?.text = "1"
         label_result!.backgroundColor = UIColor.clearColor()
         label_result!.textAlignment = .Center
-        label_result!.textColor = UIColor.blackColor()
-        label_result!.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 60)
+        label_result!.textColor = UIColor.whiteColor()
+        label_result!.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 90)
         label_result!.adjustsFontSizeToFitWidth = true
         label_result!.morphingEffect = .Fall
+        //self.detailView = label_result
         self.addSubview(label_result!)
         
-        label_count = LTMorphingLabel(frame: CGRectMake(10, 10, 40, 40))
+        label_count = LTMorphingLabel(frame: CGRectMake(0, -10, 60, 60))
         label_count?.text = "1"
         label_count!.backgroundColor = UIColor.clearColor()
         label_count!.textAlignment = .Center
         label_count!.textColor = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 1)
-        label_count!.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+        label_count!.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 40)
         label_count!.adjustsFontSizeToFitWidth = true
         label_count!.morphingEffect = .Fall
         self.addSubview(label_count!)
+        //self.titleLabel = label_count
         
         btn_delete = FlatButton()
-        btn_delete?.frame = CGRectMake(width-90, height-50, 80, 40)
-        btn_delete!.pulseColor = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 1)
-        btn_delete!.pulseScale = false
+        btn_delete?.frame = CGRectMake(width-80, height-40, 80, 40)
+        btn_delete!.pulseColor = UIColor.whiteColor()
+        btn_delete!.pulseScale = true
         btn_delete!.setTitle("close", forState: .Normal)
-        btn_delete!.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        btn_delete!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         btn_delete?.addTarget(self, action: "hide", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        //let btn = FlatButton()
+        //self.rightButtons = [btn_delete!, btn]
         self.addSubview(btn_delete!)
+        
+        self.backgroundColor=UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
     }
 
     required init?(coder aDecoder: NSCoder) {

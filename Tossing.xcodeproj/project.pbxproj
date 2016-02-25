@@ -438,6 +438,7 @@
 			isa = PBXGroup;
 			children = (
 				629ED26B1C7268CB00A29105 /* AppDelegate.swift */,
+				627395C51C7B7BB4008799EF /* ResultView.swift */,
 				629ED26D1C7268CB00A29105 /* ListViewController.swift */,
 				629ED29E1C72699100A29105 /* AddNewViewController.swift */,
 				629ED29C1C72691700A29105 /* DetailViewController.swift */,
@@ -471,7 +472,6 @@
 		629ED2A41C726AC100A29105 /* TTableView */ = {
 			isa = PBXGroup;
 			children = (
-				627395C51C7B7BB4008799EF /* ResultView.swift */,
 				629ED2A01C7269D500A29105 /* TTableView.swift */,
 				629ED2A21C7269FB00A29105 /* TTableViewCell.swift */,
 			);
@@ -918,6 +918,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bruce.product.Tosse-It";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = Tossing/Header.h;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -935,6 +936,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bruce.product.Tosse-It";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = Tossing/Header.h;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
