@@ -8,30 +8,7 @@
 
 import UIKit
 
-extension DetailViewController: LTMorphingLabelDelegate{
-
-}
-
-class DetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
-    
-    var items = [String]()
-    
-    //let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
-    var label_title = UILabel(frame: CGRectMake(18, 30, screen.width-118, 60))
-    let table_itemTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, screen.height*3/5-130))
-    let uiview_blockView = UIView(frame: CGRectMake(0, 0, screen.width, screen.height))
-    let textField_newItem = UITextField(frame: CGRectMake(30, screen.height*3/5, screen.width-160, 50))
-
-    let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/5, 80,50))
-    let btn_get = FlatButton(frame: CGRectMake(screen.width/2-80,screen.height*3/5 + 80, 160, 140))
-    let btn_list = FlatButton(frame: CGRectMake(screen.width-120, 30, 100, 55))
-
-    var resultView: ResultView?
-    
-    var list:String?
-    
-    var gesture = UIPanGestureRecognizer()
-    var getCounts = 1
+extension DetailViewController: UITableViewDataSource, UITableViewDelegate{
     //************ table view **************
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TTableViewCell", forIndexPath: indexPath) as! TTableViewCell
@@ -59,7 +36,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        
         let itemName = tableView.cellForRowAtIndexPath(indexPath)?.textLabel?.text!
         
         let alert = SCLAlertView()
@@ -98,9 +75,11 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         return screen.height/10
     }
     
-    //************ table view **************
-    
-    //************ textField **************
+
+}
+
+extension DetailViewController: UITextFieldDelegate{
+
     func textFieldDidBeginEditing(textField: UITextField) {
         
         self.view.addSubview(uiview_blockView)
@@ -112,15 +91,15 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         self.resultView?.hide()
         
         UIView.animateWithDuration(0.3, animations: {
-            textField.frame = CGRectMake(30, screen.height/2, screen.width-160, 50)
-            self.btn_add.frame = CGRectMake(screen.width-110, screen.height/2, 80,50)
+            textField.frame = CGRectMake(30, screen.height/2-80, screen.width-160, 50)
+            self.btn_add.frame = CGRectMake(screen.width-110, screen.height/2-80, 80,50)
             self.btn_add.backgroundColor = red_light
             self.btn_add.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             }, completion: nil)
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-    
+        
         UIView.animateWithDuration(0.3, animations: {
             textField.frame = CGRectMake(30, screen.height*3/5, screen.width-160, 50)
             self.btn_add.frame = CGRectMake(screen.width-110, screen.height*3/5, 80,50)
@@ -138,7 +117,34 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         textField.resignFirstResponder()
         return true
     }
-    //************ textField **************
+
+}
+
+class DetailViewController: UIViewController{
+    
+    var items = [String]()
+    
+    //let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
+    var label_title = UILabel(frame: CGRectMake(18, 30, screen.width-118, 60))
+    
+    let table_itemTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, screen.height*3/5-130))
+    
+    let uiview_blockView = UIVisualEffectView(frame: CGRectMake(0, 0, screen.width, screen.height))
+    
+    let textField_newItem = UITextField(frame: CGRectMake(30, screen.height*3/5, screen.width-160, 50))
+
+    let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/5, 80,50))
+    let btn_get = FlatButton(frame: CGRectMake(screen.width/2-80,screen.height*3/5 + 80, 160, 140))
+    let btn_list = FlatButton(frame: CGRectMake(screen.width-120, 30, 100, 55))
+
+    var resultView: ResultView?
+    
+    var list:String?
+    
+    var gesture = UIPanGestureRecognizer()
+    var getCounts = 1
+        //************ table view **************
+    
     
     
     func getItems(){
@@ -170,27 +176,36 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     func add(){
         if(textField_newItem.text != nil && textField_newItem.text != ""){
             
-            let db = FMDatabase(path: dbFilePath)
-            
-            guard db.open() else {
-                print("Error:\(db.lastErrorMessage())")
-                return
+            if(textField_newItem.text?.characters.count > 18){
+                let alert = SCLAlertView()
+                alert.showError("Sorry", subTitle: "I can't remember such a long sentence right now", closeButtonTitle: "ok forgive you", duration: 3)
+            }else{
+                items.append(textField_newItem.text!)
+                
+                let db = FMDatabase(path: dbFilePath)
+                
+                guard db.open() else {
+                    print("Error:\(db.lastErrorMessage())")
+                    return
+                }
+                
+                let insertPersonStatement = "INSERT INTO ITEMS (NAME,HOST) VALUES (?,?)"
+                do{
+                    try db.executeUpdate(insertPersonStatement, values: [self.textField_newItem.text!, self.list ?? NSNull()])
+                    db.close()
+                }catch{
+                    db.close()
+                    print("Error:\(error)")
+                }
+                
+                self.view.endEditing(true)
+                textField_newItem.text = ""
+                
+                items.removeAll(keepCapacity: false)
+                
+                self.getItems()
+                table_itemTable.reloadData()
             }
-            
-            let insertPersonStatement = "INSERT INTO ITEMS (NAME,HOST) VALUES (?,?)"
-            do{
-                try db.executeUpdate(insertPersonStatement, values: [self.textField_newItem.text!, self.list ?? NSNull()])
-                db.close()
-            }catch{
-                db.close()
-                print("Error:\(error)")
-            }
-
-            items.append(textField_newItem.text!)
-            
-            self.view.endEditing(true)
-            textField_newItem.text = ""
-            table_itemTable.reloadData()
         }
     }
     
@@ -208,17 +223,21 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         
         if items.count != 0{
             let result = items[nbr]
-            /*
-            let blurEffect = UIBlurEffect(style: .ExtraLight)
-            let blurredEffectView = UIVisualEffectView(effect: blurEffect)
-            blurredEffectView.frame = table_itemTable.frame
 
-
-            self.stackView_stack.addSubview(blurredEffectView)
-            */
-                resultView?.label_result?.text = result
-                resultView?.label_count?.text = "\(self.getCounts)"
-                self.getCounts += 1
+            let charCount = result.characters.count
+            
+            if(charCount<5){
+                resultView?.label_result?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 90)
+            }else if(charCount<9){
+                resultView?.label_result?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 50)
+            }else{
+                resultView?.label_result?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
+            }
+            
+            resultView?.label_result?.text = result
+            resultView?.label_count?.text = "\(self.getCounts)"
+            self.getCounts += 1
+            
             if(!resultView!.showing){
                 resultView?.show()
             }
@@ -246,8 +265,8 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         
  
         for list in lists{
-            if list == title{
-                self.list = list
+            if list.title == title{
+                self.list = list.title
                 break
             }
         }
@@ -264,12 +283,13 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     
     self.view.backgroundColor = UIColor.whiteColor()
     
-        uiview_blockView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        let blurEffect = UIBlurEffect(style: .Light)
+        uiview_blockView.effect = blurEffect
+        
         
         //allocate all the positions in stack view
         //stackView_stack.frame = self.view.frame
         btn_list.center.x = self.view.frame.width - 50
-        //table_listTable.center.x = stackView_stack.center.x
         
         btn_list.setTitle("List", forState: UIControlState.Normal)
         btn_list.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -319,9 +339,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         btn_get.pulseColor = red
         self.view.addSubview(btn_get)
         
-        //self.view.addSubview(stackView_stack)
-    
-        let frame = table_itemTable.frame
+        let frame = CGRectMake(10, table_itemTable.frame.minY, screen.width-20, table_itemTable.frame.height)
         let initFrame = CGRectMake(frame.minX, -frame.height, frame.width, frame.height)
         resultView = ResultView(initFrame: initFrame, finalFrame: frame)
         
@@ -331,7 +349,6 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         
         self.view.addSubview(bg)
         self.view.sendSubviewToBack(bg)
-
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -340,9 +357,23 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    
-    // Dispose of any resources that can be recreated.
     }
 
 
+}
+
+struct RegexHelper {
+    let regex: NSRegularExpression
+    
+    init(_ pattern: String) throws {
+        try regex = NSRegularExpression(pattern: pattern,
+            options: .CaseInsensitive)
+    }
+    
+    func match(input: String) -> Bool {
+        let matches = regex.matchesInString(input,
+            options: [],
+            range: NSMakeRange(0, input.characters.count))
+        return matches.count > 0
+    }
 }

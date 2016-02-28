@@ -10,10 +10,15 @@ import UIKit
 
 let screen = UIScreen.mainScreen().bounds
 
-var lists = [String]()
+var lists = [List]()
 let table_listTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, screen.height-240))
 
 var dbFilePath: String!
+
+struct List {
+    let title:String
+    var star:Bool
+}
 
 extension ListViewController:  UIViewControllerPreviewingDelegate {
     
@@ -41,24 +46,36 @@ extension ListViewController:  UIViewControllerPreviewingDelegate {
     }
 }
 
-class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableViewCellDelegate{
     
-    
-    //let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
-    let label_list = UILabel(frame: CGRectMake(18, 30, screen.width-18, 60))
-    let animeView_effectView = UIView(frame: CGRectMake(0, 0, 1, 1))
-    
-    let btn_edit = EditButton(frame: CGRectMake(screen.width-110, 30, 100, 55))
-    let btn_add = FabButton(frame: CGRectMake(screen.width/2 - 32, screen.height-110, 64, 64))
+    func check() {
+        queryLists()
+        
+        UIView.animateWithDuration(0.5, animations: {
+            table_listTable.center = CGPointMake(-screen.width/2+30, screen.height/2-20)
+            }, completion:
+            {finished in
+                UIView.animateWithDuration(0.1, animations: {
+                    table_listTable.reloadRowsAtIndexPaths(table_listTable.indexPathsForVisibleRows!, withRowAnimation: .None)
+                    }, completion: {
+                    finished in
+                        table_listTable.center = CGPointMake(screen.width*3/2-30, screen.height/2-20)
 
-    var previewVC:DetailViewController?
-    var canEditing = 0
-    //************ table view **************
+                        UIView.animateWithDuration(0.5, animations: {
+                            table_listTable.center = CGPointMake(screen.width/2, screen.height/2-20)
+                            }, completion: nil)
+                })
+        })
+        
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TTableViewCell", forIndexPath: indexPath) as! TTableViewCell
         
         let list = lists[indexPath.row]
-        cell.textLabel?.text = list
+        cell.textLabel?.text = list.title
+        cell.checked = list.star
+        cell.tDelegate = self
         
         if(canEditing==0){
             cell.hideSign()
@@ -91,7 +108,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == .Delete){
-           print("lalala")
+            print("lalala")
         }
     }
     
@@ -101,7 +118,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let newVC = DetailViewController(title: title!)
             //newVC.modalTransitionStyle = UIModalTransitionStyle.PartialCurl
             self.presentViewController(newVC, animated: true, completion: nil)
-        
+            
         }else if(canEditing == 1){
             
             let listTitle = tableView.cellForRowAtIndexPath(indexPath)?.textLabel?.text!
@@ -128,7 +145,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 db.close()
             })
             alert.showNotice(listTitle!, subTitle: "are you sure to delete it?",closeButtonTitle: "Cancel")
-        
+            
         }
     }
     
@@ -137,12 +154,21 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //************ table view **************
-    
-    //************ FMDB ******
-    
 
+}
+
+class ListViewController: UIViewController{
     
-    //************ FMDB ******
+    
+    //let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
+    let label_list = UILabel(frame: CGRectMake(18, 30, screen.width-18, 60))
+    let animeView_effectView = UIView(frame: CGRectMake(0, 0, 1, 1))
+    
+    let btn_edit = EditButton(frame: CGRectMake(screen.width-110, 30, 100, 55))
+    let btn_add = FabButton(frame: CGRectMake(screen.width/2 - 32, screen.height-110, 64, 64))
+
+    var previewVC:DetailViewController?
+    var canEditing = 0
     
     func showNewAdd(){
         let newVC = AddNewViewController()
@@ -229,10 +255,17 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if let resultSet = db.executeQuery(queryPersonStatement,withArgumentsInArray: nil){
             while resultSet.next(){
                 let title = resultSet.stringForColumn("TITLE")
-                lists.append(title)
+                let star = resultSet.boolForColumn("STAR")
+                if star{
+                    lists.insert(List(title: title, star: star), atIndex: 0)
+                }else{
+                    lists.append(List(title: title, star: star))
+                }
             }
         }
         db.close()
+        
+        //table_listTable.reloadData()
         
     }
     

@@ -46,14 +46,13 @@ class ResultView: UIView {
         
         self.backgroundColor = UIColor.whiteColor()
         
-        label_result = LTMorphingLabel(frame: CGRectMake(15, 0, width-25, height-70))
+        label_result = LTMorphingLabel(frame: CGRectMake(0, 0, width, height-50))
         label_result?.text = "1"
         label_result!.backgroundColor = UIColor.clearColor()
         label_result!.textAlignment = .Center
         label_result!.textColor = UIColor.whiteColor()
         label_result!.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 90)
-        label_result!.adjustsFontSizeToFitWidth = true
-        label_result!.morphingEffect = .Fall
+        label_result?.adjustsFontSizeToFitWidth = true
         //self.detailView = label_result
         self.addSubview(label_result!)
         

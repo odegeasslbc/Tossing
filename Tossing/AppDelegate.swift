@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dbFilePath = defaultManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!.URLByAppendingPathComponent("tosse.db").path!
         print(dbFilePath)
         
-        let dbListCreateStatements = "CREATE TABLE IF NOT EXISTS LISTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT)";
+        let dbListCreateStatements = "CREATE TABLE IF NOT EXISTS LISTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, STAR BOOL)";
         let dbItemCreateStatements = "CREATE TABLE IF NOT EXISTS ITEMS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, HOST TEXT)";
         
         
@@ -61,19 +61,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 let queryPersonStatement = "SELECT * FROM LISTS"
-                var title = ""
+                
+                var favorList = List(title:"",star: true)
+                
                 lists.removeAll(keepCapacity: false)
                 if let resultSet = db.executeQuery(queryPersonStatement,withArgumentsInArray: nil){
                     while resultSet.next(){
-                        title = resultSet.stringForColumn("TITLE")
-                        lists.append(title)
+                        let title = resultSet.stringForColumn("TITLE")
+                        let star = resultSet.boolForColumn("STAR")
+                        
+                        lists.append(List(title: title,star: star))
+                        if(star){
+                            favorList = List(title: title,star: star)
+                        }
                     }
                 }
                 db.close()
-                print(title)
-                let detailVC = DetailViewController(title: title)
-                window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
-                window?.rootViewController?.presentViewController(detailVC, animated: false, completion: nil)
+                if(favorList.title != ""){
+                    let detailVC = DetailViewController(title: favorList.title)
+                    window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+                    window?.rootViewController?.presentViewController(detailVC, animated: false, completion: nil)
+                }else{
+                    let alert = SCLAlertView()
+                    alert.showWarning("Pick a Favoriate", subTitle: "you can choose a list to quick start in editing mode", closeButtonTitle: "Ok, get it!", duration: 5)
+                }
                 handled = true
             case .add:
                 let addVC = AddNewViewController()
