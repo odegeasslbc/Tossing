@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6243F8E41C8000B500F76646 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6243F8E31C8000B500F76646 /* EditButton.swift */; };
+		6243F8E61C803EA100F76646 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8E51C803EA100F76646 /* bg.png */; };
+		6243F8E81C80437700F76646 /* paper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8E71C80437700F76646 /* paper.jpg */; };
+		6243F8EA1C80480500F76646 /* snowhill.png in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8E91C80480500F76646 /* snowhill.png */; };
+		6243F8EC1C80481800F76646 /* hills.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8EB1C80481800F76646 /* hills.jpg */; };
 		627395C61C7B7BB4008799EF /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627395C51C7B7BB4008799EF /* ResultView.swift */; };
 		627395C81C7B861D008799EF /* SCLalertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627395C71C7B861D008799EF /* SCLalertView.swift */; };
 		627395E61C7BA4A7008799EF /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 627395DB1C7BA4A7008799EF /* FMDatabase.m */; };
@@ -173,6 +178,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6243F8E31C8000B500F76646 /* EditButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
+		6243F8E51C803EA100F76646 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		6243F8E71C80437700F76646 /* paper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = paper.jpg; sourceTree = "<group>"; };
+		6243F8E91C80480500F76646 /* snowhill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snowhill.png; sourceTree = "<group>"; };
+		6243F8EB1C80481800F76646 /* hills.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hills.jpg; sourceTree = "<group>"; };
 		627395C51C7B7BB4008799EF /* ResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		627395C71C7B861D008799EF /* SCLalertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCLalertView.swift; path = ../Tossing/SCLalertView.swift; sourceTree = "<group>"; };
 		627395DA1C7BA4A7008799EF /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -438,10 +448,15 @@
 			isa = PBXGroup;
 			children = (
 				629ED26B1C7268CB00A29105 /* AppDelegate.swift */,
+				6243F8E31C8000B500F76646 /* EditButton.swift */,
 				627395C51C7B7BB4008799EF /* ResultView.swift */,
 				629ED26D1C7268CB00A29105 /* ListViewController.swift */,
 				629ED29E1C72699100A29105 /* AddNewViewController.swift */,
 				629ED29C1C72691700A29105 /* DetailViewController.swift */,
+				6243F8E91C80480500F76646 /* snowhill.png */,
+				6243F8EB1C80481800F76646 /* hills.jpg */,
+				6243F8E71C80437700F76646 /* paper.jpg */,
+				6243F8E51C803EA100F76646 /* bg.png */,
 				629ED2751C7268CB00A29105 /* Assets.xcassets */,
 				627398CD1C7BCDF6008799EF /* add.png */,
 				629ED26F1C7268CB00A29105 /* Main.storyboard */,
@@ -616,15 +631,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				627398C11C7BC5F4008799EF /* Roboto-Medium.ttf in Resources */,
+				6243F8E61C803EA100F76646 /* bg.png in Resources */,
 				627395F51C7BA4A7008799EF /* Info.plist in Resources */,
 				629ED2D21C7298F000A29105 /* Fragment.png in Resources */,
 				627398CE1C7BCDF6008799EF /* add.png in Resources */,
 				627398C01C7BC5F4008799EF /* Roboto-Light.ttf in Resources */,
 				627398991C7BC5F4008799EF /* Info.plist in Resources */,
 				629ED2791C7268CB00A29105 /* LaunchScreen.storyboard in Resources */,
+				6243F8E81C80437700F76646 /* paper.jpg in Resources */,
 				627398BF1C7BC5F4008799EF /* Roboto-Bold.ttf in Resources */,
 				6273989A1C7BC5F4008799EF /* LICENSE in Resources */,
+				6243F8EC1C80481800F76646 /* hills.jpg in Resources */,
 				627398C31C7BC5F4008799EF /* Roboto-Thin.ttf in Resources */,
+				6243F8EA1C80480500F76646 /* snowhill.png in Resources */,
 				627398C21C7BC5F4008799EF /* Roboto-Regular.ttf in Resources */,
 				629ED2CF1C7298F000A29105 /* Fire.png in Resources */,
 				629ED2761C7268CB00A29105 /* Assets.xcassets in Resources */,
@@ -723,6 +742,7 @@
 				629ED2C91C7298F000A29105 /* LTMorphingLabel.swift in Sources */,
 				627398C51C7BC5F4008799EF /* SearchBarView.swift in Sources */,
 				627398971C7BC5F4008799EF /* Grid.swift in Sources */,
+				6243F8E41C8000B500F76646 /* EditButton.swift in Sources */,
 				627398BE1C7BC5F4008799EF /* RaisedButton.swift in Sources */,
 				627398BA1C7BC5F4008799EF /* MenuView.swift in Sources */,
 				627398C61C7BC5F4008799EF /* SearchBarViewController.swift in Sources */,
@@ -913,7 +933,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Tossing/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bruce.product.Tosse-It";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -931,7 +951,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Tossing/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bruce.product.Tosse-It";
 				PRODUCT_NAME = "$(TARGET_NAME)";

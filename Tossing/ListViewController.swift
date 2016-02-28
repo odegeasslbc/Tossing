@@ -11,7 +11,7 @@ import UIKit
 let screen = UIScreen.mainScreen().bounds
 
 var lists = [String]()
-let table_listTable = TTableView(frame: CGRectMake(30, 110, screen.width-60, 350))
+let table_listTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, screen.height-240))
 
 var dbFilePath: String!
 
@@ -31,7 +31,11 @@ extension ListViewController:  UIViewControllerPreviewingDelegate {
         previewVC = DetailViewController(title: title!)
         
         previewVC!.preferredContentSize = CGSize(width: screen.width-60, height: screen.height/3)
-        previewingContext.sourceRect = cell.frame
+        if #available(iOS 9.0, *) {
+            previewingContext.sourceRect = cell.frame
+        } else {
+            // Fallback on earlier versions
+        }
         
         return previewVC
     }
@@ -40,11 +44,12 @@ extension ListViewController:  UIViewControllerPreviewingDelegate {
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     
-    let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
-    let btn_add = FabButton(frame: CGRectMake(screen.width/2 - 32, screen.height-100, 64, 64))
+    //let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
     let label_list = UILabel(frame: CGRectMake(18, 30, screen.width-18, 60))
     let animeView_effectView = UIView(frame: CGRectMake(0, 0, 1, 1))
-    let btn_edit = FlatButton(frame: CGRectMake(screen.width-110, 30, 100, 55))
+    
+    let btn_edit = EditButton(frame: CGRectMake(screen.width-110, 30, 100, 55))
+    let btn_add = FabButton(frame: CGRectMake(screen.width/2 - 32, screen.height-110, 64, 64))
 
     var previewVC:DetailViewController?
     var canEditing = 0
@@ -54,6 +59,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let list = lists[indexPath.row]
         cell.textLabel?.text = list
+        
+        if(canEditing==0){
+            cell.hideSign()
+        }else{
+            cell.showSign()
+        }
         
         return cell
     }
@@ -141,33 +152,35 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func edit(){
         if(canEditing==0){
             canEditing = 1
-            btn_edit.backgroundColor = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 1)
-            btn_edit.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            btn_edit.editing()
+            table_listTable.reloadData()
         }else{
             canEditing = 0
-            btn_edit.backgroundColor = UIColor.clearColor()
-            btn_edit.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            btn_edit.normal()
+            table_listTable.reloadData()
         }
     }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        self.modalPresentationStyle = .Custom
+
         //allocate all the positions in stack view
-        stackView_stack.frame = self.view.frame
-        btn_add.center.x = stackView_stack.center.x
-        table_listTable.center.x = stackView_stack.center.x
+        //stackView_stack.frame = self.view.frame
+        btn_add.center.x = self.view.center.x
+        table_listTable.center.x = self.view.center.x
         
         label_list.text = "List"
         label_list.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
         label_list.backgroundColor = UIColor.clearColor()
         label_list.textColor = UIColor.grayColor()
-        stackView_stack.addSubview(label_list)
+        self.view.addSubview(label_list)
         
         table_listTable.dataSource = self
         table_listTable.delegate = self
         table_listTable.separatorStyle = UITableViewCellSeparatorStyle.None
-        stackView_stack.addSubview(table_listTable)
+        self.view.addSubview(table_listTable)
         
 
         let img: UIImage? = UIImage(named: "add_circle")
@@ -175,19 +188,29 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         btn_add.setImage(img, forState: .Highlighted)
         btn_add.layer.cornerRadius = 32
         btn_add.addTarget(self, action: "showNewAdd", forControlEvents: UIControlEvents.TouchUpInside)
-        stackView_stack.addSubview(btn_add)
+        self.view.addSubview(btn_add)
         
-        btn_edit.setTitle("Edit", forState: UIControlState.Normal)
-        btn_edit.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btn_edit.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 41)
-        btn_edit.titleLabel?.textAlignment = NSTextAlignment.Center
+        //btn_edit.setTitle("", forState: UIControlState.Normal)
+        //btn_edit.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        //btn_edit.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 41)
+        //btn_edit.titleLabel?.textAlignment = NSTextAlignment.Center
         btn_edit.addTarget(self, action: "edit", forControlEvents: .TouchUpInside)
-        stackView_stack.addSubview(btn_edit)
+        self.view.addSubview(btn_edit)
         
-        self.view.addSubview(stackView_stack)
+        //self.view.addSubview(stackView_stack)
+        let bgimg = UIImage(named: "snowhill")
+        let bg = UIImageView(frame: screen)
+        bg.image = bgimg
         
-        if traitCollection.forceTouchCapability == .Available{
-            registerForPreviewingWithDelegate(self, sourceView: table_listTable)
+        self.view.addSubview(bg)
+        self.view.sendSubviewToBack(bg)
+        
+        if #available(iOS 9.0, *) {
+            if traitCollection.forceTouchCapability == .Available{
+                registerForPreviewingWithDelegate(self, sourceView: table_listTable)
+            }
+        } else {
+            // Fallback on earlier versions
         }
         
         // Do any additional setup after loading the view, typically from a nib.

@@ -13,6 +13,8 @@ class TTableViewCell: MaterialTableViewCell {
     var selectBtn:UIButton!
     //var mainView:UIView?
     
+    var sign:UIView?
+    
     func btnSelected(){
         if(checked == false){
             checked = true
@@ -23,21 +25,41 @@ class TTableViewCell: MaterialTableViewCell {
         }
     }
     
+    func showSign(){
+        UIView.animateWithDuration(0.4, animations: {
+            self.sign?.frame = CGRectMake(self.frame.width-30, 11, 18, 18)
+        })
+        UIView.transitionWithView(self.textLabel!, duration: 0.4, options: [.CurveEaseInOut, .TransitionFlipFromLeft], animations: {
+            self.textLabel?.textAlignment = .Left
+            }, completion: nil)
+    }
+    
+    func hideSign(){
+        UIView.animateWithDuration(0.4, animations: {
+            self.sign?.frame = CGRectMake(self.frame.width, 11, 18, 18)
+        })
+        UIView.transitionWithView(self.textLabel!, duration: 0.4, options: [.CurveEaseInOut, UIViewAnimationOptions.TransitionFlipFromRight], animations: {
+            self.textLabel?.textAlignment = .Center
+            }, completion: nil)
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = UIColor.clearColor()
         self.textLabel?.textColor = UIColor.blackColor()
-        self.textLabel?.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
+        self.textLabel?.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 40)
         self.textLabel?.textAlignment = NSTextAlignment.Center
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.textLabel?.adjustsFontSizeToFitWidth = true
         
-        selectBtn = UIButton(frame: CGRectMake(self.frame.width, 11, 18, 18))
-        selectBtn.backgroundColor = UIColor.whiteColor()
-        selectBtn.layer.cornerRadius = 9
-        selectBtn.addTarget(self, action: "btnSelected", forControlEvents: UIControlEvents.TouchDown)
-        //self.addSubview(selectBtn)
+        sign = UIView(frame: CGRectMake(self.frame.width, self.frame.height/2-9, 18, 18))
+        sign?.backgroundColor = red_light
+        sign?.layer.cornerRadius = 9
+        
+        self.addSubview(sign!)
+        
+        pulseColor = red
     }
     
     required init(coder aDecoder: NSCoder) {

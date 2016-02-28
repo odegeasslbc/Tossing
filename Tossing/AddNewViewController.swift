@@ -10,16 +10,16 @@ import UIKit
 
 class AddNewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
     
-    let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
-    let label_new = UILabel(frame: CGRectMake(18, 30, 100, 60))
-    let btn_list = UIButton(frame: CGRectMake(screen.width-100, 30, 100, 60))
-    let effectView = UIView(frame: CGRectMake(0, 0, 1, 1))
+    //let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
+    let label_new = LTMorphingLabel(frame: CGRectMake(10, 0, screen.width-130, 80))
     let table_itemTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, screen.height*3/4-130))
     let textField_newItem = UITextField(frame: CGRectMake(30, screen.height*3/4, screen.width-160, 50))
     let textField_title = UITextField(frame: CGRectMake(30, screen.height*3/4 + 60, screen.width-160, 50))
-    let btn_add = UIButton(frame: CGRectMake(screen.width-110, screen.height*3/4, 80,50))
-    let btn_done = UIButton(frame: CGRectMake(screen.width-120, screen.height*3/4+60, 100,50))
     
+    let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/4, 80,50))
+    let btn_done = FlatButton(frame: CGRectMake(screen.width-120, screen.height*3/4+60, 100,50))
+    let btn_list = FlatButton(frame: CGRectMake(screen.width-120, 30, 100, 55))
+
     let uiview_blockView = UIView(frame: CGRectMake(0, 0, screen.width, screen.height))
     
     var items = [String]()
@@ -76,13 +76,13 @@ class AddNewViewController: UIViewController, UITableViewDataSource, UITableView
     
     //************ textField **************
     func textFieldDidBeginEditing(textField: UITextField) {
-        stackView_stack.addSubview(uiview_blockView)
+        self.view.addSubview(uiview_blockView)
         
-        stackView_stack.bringSubviewToFront(textField)
+        self.view.bringSubviewToFront(textField)
         if(textField.tag == 1){
-            stackView_stack.bringSubviewToFront(self.btn_add)
+            self.view.bringSubviewToFront(self.btn_add)
         }else if(textField.tag == 2){
-            stackView_stack.bringSubviewToFront(self.btn_done)
+            self.view.bringSubviewToFront(self.btn_done)
         }
         
         textField.borderStyle = UITextBorderStyle.RoundedRect
@@ -91,8 +91,13 @@ class AddNewViewController: UIViewController, UITableViewDataSource, UITableView
             textField.frame = CGRectMake(30, screen.height/2, screen.width-160, 50)
             if(textField.tag == 1){
                 self.btn_add.frame = CGRectMake(screen.width-110, screen.height/2, 80,50)
+                self.btn_add.backgroundColor = red_light
+                self.btn_add.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             }else if(textField.tag == 2){
                 self.btn_done.frame = CGRectMake(screen.width-120, screen.height/2, 100,50)
+                self.btn_done.backgroundColor = red_light
+                self.btn_done.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+
             }
             }, completion: nil)
     }
@@ -103,9 +108,18 @@ class AddNewViewController: UIViewController, UITableViewDataSource, UITableView
             if(textField.tag == 1){
                 textField.frame = CGRectMake(30, screen.height*3/4, screen.width-160, 50)
                 self.btn_add.frame = CGRectMake(screen.width-110, screen.height*3/4, 80,50)
+                self.btn_add.backgroundColor = UIColor.clearColor()
+                self.btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+
             }else if(textField.tag == 2){
                 textField.frame = CGRectMake(30, screen.height*3/4+60, screen.width-160, 50)
                 self.btn_done.frame = CGRectMake(screen.width-120, screen.height*3/4+60, 100,50)
+                self.btn_done.backgroundColor = UIColor.clearColor()
+                self.btn_done.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+                
+                if(self.textField_title.text != ""){
+                    self.label_new.text = self.textField_title.text!
+                }
             }
             }, completion: {
                 finished in
@@ -118,10 +132,33 @@ class AddNewViewController: UIViewController, UITableViewDataSource, UITableView
         textField.resignFirstResponder()
         return true
     }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if(textField.tag == 2){
+            label_new.text = textField_title.text!
+        }
+        return true
+    }
     //************ textField **************
     
     func backToList(){
-        if(textField_title.text != nil && textField_title.text != "" && self.items.count != 0 ){
+        if(textField_title.text == "" && self.items.count > 0){
+            let alert = SCLAlertView()
+            alert.addButton("let her die", action: {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alert.showError("Can't save it", subTitle: "she wants to have a name to be remembered", closeButtonTitle: "alright sweety")
+        }
+        
+        else if(self.items.count == 0 && textField_title.text != ""){
+            let alert = SCLAlertView()
+            alert.addButton("quit directly", action: {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alert.showError("Can't save it", subTitle: "a list can't be a list without any items in it", closeButtonTitle: "add smartly")
+        }
+        
+        else if(textField_title.text != nil && textField_title.text != "" && self.items.count != 0 ){
             let db = FMDatabase(path: dbFilePath)
             
             guard db.open() else {
@@ -150,27 +187,15 @@ class AddNewViewController: UIViewController, UITableViewDataSource, UITableView
             }
             self.view.endEditing(true)
 
-        }
+            let alert = SCLAlertView()
+            alert.showError("Success", subTitle: "a new list has been saved", closeButtonTitle: "great", duration: 1)
+            self.dismissViewControllerAnimated(true, completion: nil)
 
+        }
+        else{
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
         
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func btnAnime(){
-        effectView.frame = CGRectMake(btn_list.center.x-10, btn_list.center.y-10, 20, 20)
-        effectView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.4)
-        self.stackView_stack.addSubview(effectView)
-        effectView.layer.cornerRadius = 10
-        UIView.animateWithDuration(1, animations: {
-            self.effectView.frame = self.btn_list.frame
-            }, completion: {
-                finished in
-                self.effectView.removeFromSuperview()
-        })
-    }
-    
-    func stopAnime(){
-        effectView.removeFromSuperview()
     }
     
     func add(){
@@ -203,33 +228,34 @@ class AddNewViewController: UIViewController, UITableViewDataSource, UITableView
         
         uiview_blockView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         //allocate all the positions in stack view
-        stackView_stack.frame = self.view.frame
-        btn_list.center.x = stackView_stack.frame.width - 50
+        //stackView_stack.frame = self.view.frame
+        btn_list.center.x = self.view.frame.width - 50
         //table_listTable.center.x = stackView_stack.center.x
         
         btn_list.setTitle("List", forState: UIControlState.Normal)
         btn_list.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
+        btn_list.setTitleColor(red_light, forState: UIControlState.Highlighted)
+        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 40)
         btn_list.backgroundColor = UIColor.clearColor()
-        btn_list.addTarget(self, action: "btnAnime", forControlEvents: UIControlEvents.TouchDown)
-        btn_list.addTarget(self, action: "stopAnime", forControlEvents: UIControlEvents.TouchDragExit)
         btn_list.addTarget(self, action: "backToList", forControlEvents: UIControlEvents.TouchUpInside)
-        stackView_stack.addSubview(btn_list)
+        btn_list.pulseColor = red
+        self.view.addSubview(btn_list)
         
         label_new.text = "New"
         label_new.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
         label_new.backgroundColor = UIColor.clearColor()
         label_new.textColor = UIColor.grayColor()
-        stackView_stack.addSubview(label_new)
+        label_new.morphingEffect = LTMorphingEffect.Scale
+        self.view.addSubview(label_new)
         
-        textField_newItem.backgroundColor = UIColor.whiteColor()
+        textField_newItem.backgroundColor = UIColor.clearColor()
         textField_newItem.clearButtonMode = UITextFieldViewMode.WhileEditing
         textField_newItem.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
         textField_newItem.delegate = self
         textField_newItem.placeholder = "New Item"
         textField_newItem.adjustsFontSizeToFitWidth = true
         
-        textField_title.backgroundColor = UIColor.whiteColor()
+        textField_title.backgroundColor = UIColor.clearColor()
         textField_title.clearButtonMode = UITextFieldViewMode.WhileEditing
         textField_title.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
         textField_title.delegate = self
@@ -238,33 +264,45 @@ class AddNewViewController: UIViewController, UITableViewDataSource, UITableView
         
         btn_add.backgroundColor=UIColor.clearColor()
         btn_add.layer.cornerRadius = 5
-        btn_add.setTitle("Add", forState: UIControlState.Normal)
+        btn_add.setTitle("add", forState: UIControlState.Normal)
         btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btn_add.setTitleColor(UIColor.redColor(), forState: UIControlState.Highlighted)
-        btn_add.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
+        btn_add.setTitleColor(red_light, forState: UIControlState.Highlighted)
+        btn_add.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 30)
         btn_add.addTarget(self, action: "add", forControlEvents: UIControlEvents.TouchUpInside)
-        
+        btn_add.pulseColor = red
+
         btn_done.backgroundColor=UIColor.clearColor()
         btn_done.layer.cornerRadius = 5
-        btn_done.setTitle("Done", forState: UIControlState.Normal)
+        btn_done.setTitle("done", forState: UIControlState.Normal)
         btn_done.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btn_done.setTitleColor(UIColor.redColor(), forState: UIControlState.Highlighted)
-        btn_done.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
+        btn_done.setTitleColor(red_light, forState: UIControlState.Highlighted)
+        btn_done.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 30)
         btn_done.addTarget(self, action: "done", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        table_itemTable.backgroundColor = UIColor.whiteColor()
+        btn_done.pulseColor = red
+
+        table_itemTable.backgroundColor = UIColor.clearColor()
         table_itemTable.dataSource = self
         table_itemTable.delegate = self
         table_itemTable.separatorStyle = UITableViewCellSeparatorStyle.None
         
-        stackView_stack.addSubview(table_itemTable)
-        stackView_stack.addSubview(textField_title)
-        stackView_stack.addSubview(textField_newItem)
-        stackView_stack.addSubview(btn_done)
-        stackView_stack.addSubview(btn_add)
+        self.view.addSubview(table_itemTable)
+        self.view.addSubview(textField_title)
+        self.view.addSubview(textField_newItem)
+        self.view.addSubview(btn_done)
+        self.view.addSubview(btn_add)
         
-        self.view.addSubview(stackView_stack)
+        self.modalPresentationStyle = .Custom
+
+        let bgimg = UIImage(named: "snowhill")
+        let bg = UIImageView(frame: screen)
+        bg.image = bgimg
         
+        self.view.addSubview(bg)
+        self.view.sendSubviewToBack(bg)
+
+        //self.view.addSubview(stackView_stack)
+        self.view.backgroundColor = UIColor.clearColor()
+
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

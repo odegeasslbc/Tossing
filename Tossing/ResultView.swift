@@ -9,6 +9,8 @@
 import UIKit
 
 let red = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 1)
+let red_light = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 0.8)
+
 
 class ResultView: UIView {
     
@@ -22,14 +24,14 @@ class ResultView: UIView {
     
     func show(){
         showing = true
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.frame = self.finalFrame!
             }, completion: nil)
     }
     
     func hide(){
         showing = false
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animateWithDuration(0.6, animations: {
             self.frame = self.initFrame!
             }, completion: nil)
     }
@@ -76,6 +78,8 @@ class ResultView: UIView {
         
         //let btn = FlatButton()
         //self.rightButtons = [btn_delete!, btn]
+        
+        self.layer.cornerRadius = 5
         self.addSubview(btn_delete!)
         
         self.backgroundColor=UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)

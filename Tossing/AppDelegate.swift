@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    @available(iOS 9.0, *)
     func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
         var handled = false
         //Get type string from shortcutItem
@@ -84,20 +85,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return handled
     }
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?)-> Bool {
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
         initDB()
-        var launchedFromShortcut = false
-        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
-            launchedFromShortcut = true
-            handleShortCutItem(shortcutItem)
-        }
         
-        //Return false incase application was lanched from shorcut to prevent
-        //application(_:performActionForShortcutItem:completionHandler:) from being called
+        var launchedFromShortcut = false
+        if #available(iOS 9.0, *) {
+            if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+                launchedFromShortcut = true
+                handleShortCutItem(shortcutItem)
+                
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+
+        
         return launchedFromShortcut
     }
     
+    @available(iOS 9.0, *)
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
         
         initDB()
@@ -132,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data stack
 
-    lazy var applicationDocumentsDirectory: NSURL = {
+    var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.bruce.product.Tossing" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
