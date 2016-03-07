@@ -67,16 +67,16 @@ extension AddNewViewController: UITextFieldDelegate{
             self.view.bringSubviewToFront(self.btn_done)
         }
         
-        textField.borderStyle = UITextBorderStyle.RoundedRect
+        //textField.borderStyle = UITextBorderStyle.RoundedRect
         
         UIView.animateWithDuration(0.3, animations: {
-            textField.frame = CGRectMake(30, screen.height/2-80, screen.width-160, 50)
+            textField.frame = CGRectMake(30, screen.height-350, screen.width-160, 50)
             if(textField.tag == 1){
-                self.btn_add.frame = CGRectMake(screen.width-110, screen.height/2-80, 80,50)
+                self.btn_add.frame = CGRectMake(screen.width-110, screen.height-350, 80,50)
                 self.btn_add.backgroundColor = red_light
                 self.btn_add.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             }else if(textField.tag == 2){
-                self.btn_done.frame = CGRectMake(screen.width-120, screen.height/2-80, 100,50)
+                self.btn_done.frame = CGRectMake(screen.width-120, screen.height-350, 100,50)
                 self.btn_done.backgroundColor = red_light
                 self.btn_done.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
                 
@@ -130,8 +130,8 @@ class AddNewViewController: UIViewController{
     
     let table_itemTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, screen.height*3/4-130))
     
-    let textField_newItem = UITextField(frame: CGRectMake(30, screen.height*3/4, screen.width-160, 50))
-    let textField_title = UITextField(frame: CGRectMake(30, screen.height*3/4 + 60, screen.width-160, 50))
+    let textField_newItem = TextField(frame: CGRectMake(30, screen.height*3/4, screen.width-160, 40))
+    let textField_title = TextField(frame: CGRectMake(30, screen.height*3/4 + 60, screen.width-160, 40))
     
     let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/4, 80,50))
     let btn_done = FlatButton(frame: CGRectMake(screen.width-120, screen.height*3/4+60, 100,50))
@@ -269,8 +269,9 @@ class AddNewViewController: UIViewController{
         textField_newItem.tag = 1
         textField_title.tag = 2
         
-        let blurEffect = UIBlurEffect(style: .Light)
+        let blurEffect = UIBlurEffect(style: .Dark)
         uiview_blockView.effect = blurEffect
+        //uiview_blockView.alpha = 0.8
         
         btn_list.center.x = self.view.frame.width - 50
         
@@ -296,6 +297,9 @@ class AddNewViewController: UIViewController{
         textField_newItem.delegate = self
         textField_newItem.placeholder = "New Item"
         textField_newItem.adjustsFontSizeToFitWidth = true
+        textField_newItem.titleLabel = UILabel()
+        textField_newItem.titleLabelColor = MaterialColor.grey.base
+        textField_newItem.titleLabelActiveColor = red_light
         
         textField_title.backgroundColor = UIColor.clearColor()
         textField_title.clearButtonMode = UITextFieldViewMode.WhileEditing
@@ -303,6 +307,9 @@ class AddNewViewController: UIViewController{
         textField_title.delegate = self
         textField_title.placeholder = "Set Title"
         textField_title.adjustsFontSizeToFitWidth = true
+        textField_title.titleLabel = UILabel()
+        textField_title.titleLabelColor = MaterialColor.grey.base
+        textField_title.titleLabelActiveColor = red_light
         
         btn_add.backgroundColor=UIColor.clearColor()
         btn_add.layer.cornerRadius = 5

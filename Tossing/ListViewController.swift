@@ -228,8 +228,8 @@ class ListViewController: UIViewController{
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
         
-        self.view.addSubview(bg)
-        self.view.sendSubviewToBack(bg)
+        //self.view.addSubview(bg)
+        //self.view.sendSubviewToBack(bg)
         
         if #available(iOS 9.0, *) {
             if traitCollection.forceTouchCapability == .Available{
