@@ -76,23 +76,22 @@ class TTableViewCell: MaterialTableViewCell {
         if(checked){
             sign?.backgroundColor = red_light
         }else{
-            sign?.backgroundColor = UIColor.grayColor()
+            sign?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         }
         
-        UIView.animateWithDuration(0.4, animations: {
-            self.sign?.frame = CGRectMake(self.frame.width-35, self.frame.height/2-12, 35, 24)
-        })
-        UIView.transitionWithView(self.textLabel!, duration: 0.4, options: [.CurveEaseInOut, .TransitionFlipFromLeft], animations: {
+        UIView.transitionWithView(self.textLabel!, duration: 0.5, options: [.CurveEaseInOut, .TransitionCrossDissolve], animations: {
             self.textLabel?.textAlignment = .Left
+            self.sign?.frame = CGRectMake(self.frame.width-30, self.frame.height/2-12, 24, 24)
+
             }, completion: nil)
     }
     
     func hideSign(){
-        UIView.animateWithDuration(0.4, animations: {
-            self.sign?.frame = CGRectMake(self.frame.width, self.frame.height/2-12, 35, 24)
-        })
-        UIView.transitionWithView(self.textLabel!, duration: 0.4, options: [.CurveEaseInOut, UIViewAnimationOptions.TransitionFlipFromRight], animations: {
+
+        UIView.transitionWithView(self.textLabel!, duration: 0.5, options: [.CurveEaseInOut, UIViewAnimationOptions.TransitionCrossDissolve], animations: {
             self.textLabel?.textAlignment = .Center
+            self.sign?.frame = CGRectMake(self.frame.width, self.frame.height/2-12, 24, 24)
+
             }, completion: nil)
     }
     
@@ -101,15 +100,15 @@ class TTableViewCell: MaterialTableViewCell {
         
         self.backgroundColor = UIColor.clearColor()
         self.textLabel?.textColor = UIColor.blackColor()
-        self.textLabel?.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 40)
+        self.textLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 40)
         self.textLabel?.textAlignment = NSTextAlignment.Center
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.textLabel?.adjustsFontSizeToFitWidth = true
         
-        sign = FlatButton(frame: CGRectMake(self.frame.width, self.frame.height/2-12, 35, 24))
+        sign = FlatButton(frame: CGRectMake(self.frame.width, self.frame.height/2-12, 24, 24))
         sign?.backgroundColor = red_light
         sign?.addTarget(self, action: "setFavor", forControlEvents: UIControlEvents.TouchUpInside)
-        //sign?.layer.cornerRadius = 10
+        sign?.layer.cornerRadius = 12
         
         self.addSubview(sign!)
         

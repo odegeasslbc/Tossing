@@ -37,7 +37,7 @@ class EditButton: FlatButton {
     func editing(){
         self.backgroundColor = red_light
         textLabel.textColor = UIColor.whiteColor()
-        textLabel.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 36)
+        textLabel.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 35)
         
         textLabel.morphingEffect = rdEffect(5)
         textLabel.text = "editing"
@@ -46,7 +46,7 @@ class EditButton: FlatButton {
     func normal(){
         self.backgroundColor = UIColor.clearColor()
         textLabel.textColor = UIColor.blackColor()
-        textLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 38)
+        textLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 35)
         
         textLabel.morphingEffect = rdEffect(5)
         textLabel.text = "edit"

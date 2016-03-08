@@ -191,7 +191,7 @@ class ListViewController: UIViewController{
         
         super.viewDidLoad()
         self.modalPresentationStyle = .Custom
-
+        
         //allocate all the positions in stack view
         //stackView_stack.frame = self.view.frame
         btn_add.center.x = self.view.center.x
@@ -200,7 +200,7 @@ class ListViewController: UIViewController{
         label_list.text = "List"
         label_list.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
         label_list.backgroundColor = UIColor.clearColor()
-        label_list.textColor = UIColor.grayColor()
+        label_list.textColor = red_light
         self.view.addSubview(label_list)
         
         table_listTable.dataSource = self
@@ -224,12 +224,12 @@ class ListViewController: UIViewController{
         self.view.addSubview(btn_edit)
         
         //self.view.addSubview(stackView_stack)
-        let bgimg = UIImage(named: "snowhill")
+        let bgimg = UIImage(named: "1")
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
         
-        //self.view.addSubview(bg)
-        //self.view.sendSubviewToBack(bg)
+        self.view.addSubview(bg)
+        self.view.sendSubviewToBack(bg)
         
         if #available(iOS 9.0, *) {
             if traitCollection.forceTouchCapability == .Available{

@@ -86,13 +86,12 @@ extension DetailViewController: UITextFieldDelegate{
         
         self.view.bringSubviewToFront(textField)
         self.view.bringSubviewToFront(self.btn_add)
-        textField.borderStyle = UITextBorderStyle.RoundedRect
         
         self.resultView?.hide()
         
         UIView.animateWithDuration(0.3, animations: {
-            textField.frame = CGRectMake(30, screen.height/2-80, screen.width-160, 50)
-            self.btn_add.frame = CGRectMake(screen.width-110, screen.height/2-80, 80,50)
+            textField.frame = CGRectMake(30, screen.height-350, screen.width-160, 50)
+            self.btn_add.frame = CGRectMake(screen.width-110, screen.height-350, 80,50)
             self.btn_add.backgroundColor = red_light
             self.btn_add.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             }, completion: nil)
@@ -101,7 +100,7 @@ extension DetailViewController: UITextFieldDelegate{
     func textFieldDidEndEditing(textField: UITextField) {
         
         UIView.animateWithDuration(0.3, animations: {
-            textField.frame = CGRectMake(30, screen.height*3/5, screen.width-160, 50)
+            textField.frame = CGRectMake(30, screen.height*3/5, screen.width-160, 40)
             self.btn_add.frame = CGRectMake(screen.width-110, screen.height*3/5, 80,50)
             }, completion: {
                 finished in
@@ -131,7 +130,7 @@ class DetailViewController: UIViewController{
     
     let uiview_blockView = UIVisualEffectView(frame: CGRectMake(0, 0, screen.width, screen.height))
     
-    let textField_newItem = UITextField(frame: CGRectMake(30, screen.height*3/5, screen.width-160, 50))
+    let textField_newItem = TextField(frame: CGRectMake(30, screen.height*3/5, screen.width-160, 40))
 
     let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/5, 80,50))
     let btn_get = FlatButton(frame: CGRectMake(screen.width/2-80,screen.height*3/5 + 80, 160, 140))
@@ -294,7 +293,7 @@ class DetailViewController: UIViewController{
         btn_list.setTitle("List", forState: UIControlState.Normal)
         btn_list.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         btn_list.setTitleColor(red_light, forState: UIControlState.Highlighted)
-        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 40)
+        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 35)
         btn_list.backgroundColor = UIColor.clearColor()
         btn_list.addTarget(self, action: "backToList", forControlEvents: UIControlEvents.TouchUpInside)
         btn_list.pulseColor = red
@@ -302,7 +301,7 @@ class DetailViewController: UIViewController{
         
         label_title.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
         label_title.backgroundColor = UIColor.clearColor()
-        label_title.textColor = UIColor.grayColor()
+        label_title.textColor = red_light
         label_title.adjustsFontSizeToFitWidth = true
         self.view.addSubview(label_title)
         
@@ -318,6 +317,9 @@ class DetailViewController: UIViewController{
         textField_newItem.delegate = self
         textField_newItem.placeholder = "New Item"
         textField_newItem.adjustsFontSizeToFitWidth = true
+        textField_newItem.titleLabel = UILabel()
+        textField_newItem.titleLabelColor = MaterialColor.grey.base
+        textField_newItem.titleLabelActiveColor = red_light
         self.view.addSubview(textField_newItem)
         
         btn_add.backgroundColor=UIColor.clearColor()
@@ -343,7 +345,7 @@ class DetailViewController: UIViewController{
         let initFrame = CGRectMake(frame.minX, -frame.height, frame.width, frame.height)
         resultView = ResultView(initFrame: initFrame, finalFrame: frame)
         
-        let bgimg = UIImage(named: "snowhill")
+        let bgimg = UIImage(named: "3")
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
         

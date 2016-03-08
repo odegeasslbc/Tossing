@@ -88,24 +88,22 @@ extension AddNewViewController: UITextFieldDelegate{
         
         UIView.animateWithDuration(0.3, animations: {
             if(textField.tag == 1){
-                textField.frame = CGRectMake(30, screen.height*3/4, screen.width-160, 50)
+                textField.frame = CGRectMake(30, screen.height*3/4, screen.width-160, 40)
                 self.btn_add.frame = CGRectMake(screen.width-110, screen.height*3/4, 80,50)
                 self.btn_add.backgroundColor = UIColor.clearColor()
                 self.btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
                 
             }else if(textField.tag == 2){
-                textField.frame = CGRectMake(30, screen.height*3/4+60, screen.width-160, 50)
+                textField.frame = CGRectMake(30, screen.height*3/4+60, screen.width-160, 40)
                 self.btn_done.frame = CGRectMake(screen.width-120, screen.height*3/4+60, 100,50)
                 self.btn_done.backgroundColor = UIColor.clearColor()
                 self.btn_done.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-                
-                if(self.textField_title.text != ""){
-                    self.label_new.text = self.textField_title.text!
-                }
             }
             }, completion: {
                 finished in
-                textField.borderStyle = UITextBorderStyle.None
+                if(textField.tag == 2){
+                   textField.text = "" 
+                }
                 self.uiview_blockView.removeFromSuperview()
         })
     }
@@ -117,7 +115,8 @@ extension AddNewViewController: UITextFieldDelegate{
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         if(textField.tag == 2){
-            label_new.text = textField_title.text!
+            //label_new.text = textField_title.text!
+            //label_new.textColor = red_light
         }
         return true
     }
@@ -126,7 +125,7 @@ extension AddNewViewController: UITextFieldDelegate{
 
 class AddNewViewController: UIViewController{
     
-    let label_new = LTMorphingLabel(frame: CGRectMake(10, 0, screen.width-130, 80))
+    let label_new = UILabel(frame: CGRectMake(18, 30, screen.width-130, 60))
     
     let table_itemTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, screen.height*3/4-130))
     
@@ -144,23 +143,27 @@ class AddNewViewController: UIViewController{
     
     //**** functions ****
     func backToList(){
-        
-        if checkTitle(){
-            if(textField_title.text == "" && self.items.count > 0){
+        if(label_new.text == "New" && items.count == 0){
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        else if checkTitle(){
+            if(label_new.text == "New" && label_new.text != ""){
                 let alert = SCLAlertView()
                 alert.addButton("let her die", action: {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
                 alert.showError("Can't save it", subTitle: "she wants to have a name to be remembered", closeButtonTitle: "alright sweety")
             }
-            else if(self.items.count == 0 && textField_title.text != ""){
+            
+            else if(self.items.count == 0){
                 let alert = SCLAlertView()
                 alert.addButton("quit directly", action: {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
-                alert.showError("Can't save it", subTitle: "a list can't be a list without any items in it", closeButtonTitle: "add smartly")
+                alert.showError("Can't save it", subTitle: "a list can't be a list without any items in it", closeButtonTitle: "ok, add")
             }
-            else if(textField_title.text != nil && textField_title.text != "" && self.items.count != 0 ){
+                
+            else if(label_new.text != "New" && label_new.text != nil && self.items.count != 0 ){
                 let db = FMDatabase(path: dbFilePath)
                 
                 guard db.open() else {
@@ -168,7 +171,7 @@ class AddNewViewController: UIViewController{
                     return
                 }
                 
-                let list = textField_title.text!
+                let list = label_new.text
                 
                 for item in items{
                     let insertPersonStatement = "INSERT INTO ITEMS (NAME,HOST) VALUES (?,?)"
@@ -181,7 +184,7 @@ class AddNewViewController: UIViewController{
                 
                 let insertPersonStatement = "INSERT INTO LISTS (TITLE, STAR) VALUES (?,?)"
                 do{
-                    try db.executeUpdate(insertPersonStatement, values: [list, false ?? NSNull()])
+                    try db.executeUpdate(insertPersonStatement, values: [list!, false ?? NSNull()])
                     db.close()
                 }catch{
                     db.close()
@@ -213,13 +216,21 @@ class AddNewViewController: UIViewController{
                 items.append(textField_newItem.text!)
                 table_itemTable.reloadData()
                 textField_newItem.text = ""
+                btn_list.setTitle("Save", forState: UIControlState.Normal)
             }
         }
     }
     
     func done(){
        
-        checkTitle()
+        if checkTitle(){
+            if(textField_title.text != ""){
+                label_new.text = textField_title.text
+                label_new.textColor = red_light
+                btn_list.setTitle("Save", forState: UIControlState.Normal)
+                textField_title.text = ""
+            }
+        }
         
         self.view.endEditing(true)
     }
@@ -230,12 +241,25 @@ class AddNewViewController: UIViewController{
         
         for title in result{
             if (newTitle == title) {
+                textField_title.text = ""
+                //label_new.text = "New"
+                //label_new.textColor = UIColor.grayColor()
                 let alert = SCLAlertView()
                 alert.showError("Nope", subTitle: "the title already exists", closeButtonTitle: "ok", duration: 2)
                 return false
             }
         }
-
+        
+        for char in (newTitle?.characters)!{
+            if char == "'"{
+                textField_title.text = ""
+                //label_new.text = "New"
+                //label_new.textColor = UIColor.grayColor()
+                let alert = SCLAlertView()
+                alert.showError("Nope", subTitle: "the title shouldn't contain signs ", closeButtonTitle: "ok", duration: 2)
+                return false
+            }
+        }
         return true
     }
     
@@ -275,10 +299,10 @@ class AddNewViewController: UIViewController{
         
         btn_list.center.x = self.view.frame.width - 50
         
-        btn_list.setTitle("List", forState: UIControlState.Normal)
+        btn_list.setTitle("Back", forState: UIControlState.Normal)
         btn_list.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         btn_list.setTitleColor(red_light, forState: UIControlState.Highlighted)
-        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 40)
+        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 33)
         btn_list.backgroundColor = UIColor.clearColor()
         btn_list.addTarget(self, action: "backToList", forControlEvents: UIControlEvents.TouchUpInside)
         btn_list.pulseColor = red
@@ -288,7 +312,8 @@ class AddNewViewController: UIViewController{
         label_new.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
         label_new.backgroundColor = UIColor.clearColor()
         label_new.textColor = UIColor.grayColor()
-        label_new.morphingEffect = LTMorphingEffect.Scale
+        label_new.adjustsFontSizeToFitWidth = true
+        //label_new.morphingEffect = LTMorphingEffect.Scale
         self.view.addSubview(label_new)
         
         textField_newItem.backgroundColor = UIColor.clearColor()
@@ -342,7 +367,7 @@ class AddNewViewController: UIViewController{
         
         self.modalPresentationStyle = .Custom
 
-        let bgimg = UIImage(named: "snowhill")
+        let bgimg = UIImage(named: "2")
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
         
