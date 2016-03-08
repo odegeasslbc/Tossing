@@ -13,18 +13,18 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TTableViewCell", forIndexPath: indexPath) as! TTableViewCell
         
-        let item = items[indexPath.row]
+        let item = items[indexPath.section]
         cell.textLabel?.text = item
         
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return 1
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return items.count
     }
     
     func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
@@ -42,8 +42,8 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate{
         let alert = SCLAlertView()
         
         alert.addButton("Delete", action: {
-            self.items.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+            self.items.removeAtIndex(indexPath.section)
+            tableView.deleteSections(NSIndexSet(index:indexPath.section), withRowAnimation: .Right)
             
             let db = FMDatabase(path: dbFilePath)
             guard db.open() else {
@@ -75,6 +75,16 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate{
         return screen.height/10
     }
     
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = clear
+        return view
+    }
+
 
 }
 
@@ -348,6 +358,13 @@ class DetailViewController: UIViewController{
         let bgimg = UIImage(named: "3")
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
+        
+        let Effect = UIBlurEffect(style: .Light)
+        let blurView = UIVisualEffectView(frame: self.view.frame)
+        blurView.effect = Effect
+        
+        self.view.addSubview(blurView)
+        self.view.sendSubviewToBack(blurView)
         
         self.view.addSubview(bg)
         self.view.sendSubviewToBack(bg)

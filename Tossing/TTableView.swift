@@ -20,8 +20,7 @@ class TTableView: UITableView {
         super.init(frame: frame,  style: UITableViewStyle.Plain)
         self.registerClass(TTableViewCell.self, forCellReuseIdentifier: "TTableViewCell")
         
-        self.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0)
-
+        self.backgroundColor = clear
     }
     
     required init(coder aDecoder: NSCoder) {

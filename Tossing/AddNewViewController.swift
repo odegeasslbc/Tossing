@@ -13,18 +13,18 @@ extension AddNewViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TTableViewCell", forIndexPath: indexPath) as! TTableViewCell
         
-        let item = items[indexPath.row]
+        let item = items[indexPath.section]
         cell.textLabel?.text = item
         
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return 1
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return items.count
     }
     
     func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
@@ -41,13 +41,23 @@ extension AddNewViewController: UITableViewDataSource, UITableViewDelegate{
         let alert = SCLAlertView()
         
         alert.addButton("Delete", action: {
-            self.items.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+            self.items.removeAtIndex(indexPath.section)
+            tableView.deleteSections(NSIndexSet(index:indexPath.section), withRowAnimation: .Right)
         })
         alert.showNotice(itemName!, subTitle: "are you sure to delete it?",closeButtonTitle: "Cancel")
         
     }
     
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = clear
+        return view
+    }
+
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return screen.height/10
     }
@@ -371,9 +381,17 @@ class AddNewViewController: UIViewController{
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
         
+        let Effect = UIBlurEffect(style: .Light)
+        let blurView = UIVisualEffectView(frame: self.view.frame)
+        blurView.effect = Effect
+        
+        self.view.addSubview(blurView)
+        self.view.sendSubviewToBack(blurView)
+        
         self.view.addSubview(bg)
         self.view.sendSubviewToBack(bg)
 
+        
         self.view.backgroundColor = UIColor.clearColor()
 
     }

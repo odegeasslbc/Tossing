@@ -15,6 +15,8 @@ let table_listTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, scr
 
 var dbFilePath: String!
 
+var bgColor = UIColor(red: 1, green: 160/255, blue: 165/255, alpha: 1)
+
 struct List {
     let title:String
     var star:Bool
@@ -72,7 +74,7 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TTableViewCell", forIndexPath: indexPath) as! TTableViewCell
         
-        let list = lists[indexPath.row]
+        let list = lists[indexPath.section]
         cell.textLabel?.text = list.title
         cell.checked = list.star
         cell.tDelegate = self
@@ -87,11 +89,11 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
+        return 1
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return lists.count
     }
     
     func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
@@ -125,8 +127,8 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
             let alert = SCLAlertView()
             
             alert.addButton("Delete", action: {
-                lists.removeAtIndex(indexPath.row)
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+                lists.removeAtIndex(indexPath.section)
+                tableView.deleteSections(NSIndexSet(index:indexPath.section), withRowAnimation: .Right)
                 
                 let db = FMDatabase(path: dbFilePath)
                 guard db.open() else {
@@ -147,6 +149,16 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
             alert.showNotice(listTitle!, subTitle: "are you sure to delete it?",closeButtonTitle: "Cancel")
             
         }
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = clear
+        return view
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -228,9 +240,19 @@ class ListViewController: UIViewController{
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
         
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurView = UIVisualEffectView(frame: self.view.frame)
+        blurView.effect = blurEffect
+        
+        self.view.addSubview(blurView)
+        self.view.sendSubviewToBack(blurView)
+        
         self.view.addSubview(bg)
         self.view.sendSubviewToBack(bg)
         
+        canEditing = 0
+        
+        //self.view.backgroundColor = bgColor
         if #available(iOS 9.0, *) {
             if traitCollection.forceTouchCapability == .Available{
                 registerForPreviewingWithDelegate(self, sourceView: table_listTable)

@@ -12,15 +12,7 @@
 		320CA5611C827B5600353D19 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320CA55D1C827B5600353D19 /* CardView.swift */; };
 		320CA5621C827B5600353D19 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320CA55E1C827B5600353D19 /* CaptureView.swift */; };
 		320CA5641C827B6100353D19 /* CapturePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320CA5631C827B6100353D19 /* CapturePreviewView.swift */; };
-		623E66581C8E52D2007CF021 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 623E66551C8E52D2007CF021 /* 2.png */; };
-		623E66591C8E52D2007CF021 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 623E66561C8E52D2007CF021 /* 3.png */; };
-		623E665A1C8E52D2007CF021 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 623E66571C8E52D2007CF021 /* 1.png */; };
-		623E665C1C8E558D007CF021 /* 11.png in Resources */ = {isa = PBXBuildFile; fileRef = 623E665B1C8E558D007CF021 /* 11.png */; };
 		6243F8E41C8000B500F76646 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6243F8E31C8000B500F76646 /* EditButton.swift */; };
-		6243F8E61C803EA100F76646 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8E51C803EA100F76646 /* bg.png */; };
-		6243F8E81C80437700F76646 /* paper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8E71C80437700F76646 /* paper.jpg */; };
-		6243F8EA1C80480500F76646 /* snowhill.png in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8E91C80480500F76646 /* snowhill.png */; };
-		6243F8EC1C80481800F76646 /* hills.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8EB1C80481800F76646 /* hills.jpg */; };
 		627395C61C7B7BB4008799EF /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627395C51C7B7BB4008799EF /* ResultView.swift */; };
 		627395C81C7B861D008799EF /* SCLalertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627395C71C7B861D008799EF /* SCLalertView.swift */; };
 		627395E61C7BA4A7008799EF /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 627395DB1C7BA4A7008799EF /* FMDatabase.m */; };
@@ -187,15 +179,7 @@
 		320CA55D1C827B5600353D19 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		320CA55E1C827B5600353D19 /* CaptureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		320CA5631C827B6100353D19 /* CapturePreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CapturePreviewView.swift; sourceTree = "<group>"; };
-		623E66551C8E52D2007CF021 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
-		623E66561C8E52D2007CF021 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
-		623E66571C8E52D2007CF021 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
-		623E665B1C8E558D007CF021 /* 11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 11.png; sourceTree = "<group>"; };
 		6243F8E31C8000B500F76646 /* EditButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
-		6243F8E51C803EA100F76646 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
-		6243F8E71C80437700F76646 /* paper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = paper.jpg; sourceTree = "<group>"; };
-		6243F8E91C80480500F76646 /* snowhill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snowhill.png; sourceTree = "<group>"; };
-		6243F8EB1C80481800F76646 /* hills.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hills.jpg; sourceTree = "<group>"; };
 		627395C51C7B7BB4008799EF /* ResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		627395C71C7B861D008799EF /* SCLalertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCLalertView.swift; path = ../Tossing/SCLalertView.swift; sourceTree = "<group>"; };
 		627395DA1C7BA4A7008799EF /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -461,14 +445,6 @@
 				629ED26D1C7268CB00A29105 /* ListViewController.swift */,
 				629ED29E1C72699100A29105 /* AddNewViewController.swift */,
 				629ED29C1C72691700A29105 /* DetailViewController.swift */,
-				6243F8E91C80480500F76646 /* snowhill.png */,
-				6243F8EB1C80481800F76646 /* hills.jpg */,
-				623E66551C8E52D2007CF021 /* 2.png */,
-				623E665B1C8E558D007CF021 /* 11.png */,
-				623E66561C8E52D2007CF021 /* 3.png */,
-				623E66571C8E52D2007CF021 /* 1.png */,
-				6243F8E71C80437700F76646 /* paper.jpg */,
-				6243F8E51C803EA100F76646 /* bg.png */,
 				629ED2751C7268CB00A29105 /* Assets.xcassets */,
 				627398CD1C7BCDF6008799EF /* add.png */,
 				629ED26F1C7268CB00A29105 /* Main.storyboard */,
@@ -643,27 +619,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				627398C11C7BC5F4008799EF /* Roboto-Medium.ttf in Resources */,
-				6243F8E61C803EA100F76646 /* bg.png in Resources */,
 				627395F51C7BA4A7008799EF /* Info.plist in Resources */,
 				629ED2D21C7298F000A29105 /* Fragment.png in Resources */,
 				627398CE1C7BCDF6008799EF /* add.png in Resources */,
 				627398C01C7BC5F4008799EF /* Roboto-Light.ttf in Resources */,
 				627398991C7BC5F4008799EF /* Info.plist in Resources */,
 				629ED2791C7268CB00A29105 /* LaunchScreen.storyboard in Resources */,
-				6243F8E81C80437700F76646 /* paper.jpg in Resources */,
-				623E66581C8E52D2007CF021 /* 2.png in Resources */,
 				627398BF1C7BC5F4008799EF /* Roboto-Bold.ttf in Resources */,
-				623E66591C8E52D2007CF021 /* 3.png in Resources */,
 				6273989A1C7BC5F4008799EF /* LICENSE in Resources */,
-				6243F8EC1C80481800F76646 /* hills.jpg in Resources */,
 				627398C31C7BC5F4008799EF /* Roboto-Thin.ttf in Resources */,
-				6243F8EA1C80480500F76646 /* snowhill.png in Resources */,
 				627398C21C7BC5F4008799EF /* Roboto-Regular.ttf in Resources */,
 				629ED2CF1C7298F000A29105 /* Fire.png in Resources */,
 				629ED2761C7268CB00A29105 /* Assets.xcassets in Resources */,
-				623E665C1C8E558D007CF021 /* 11.png in Resources */,
 				629ED2711C7268CB00A29105 /* Main.storyboard in Resources */,
-				623E665A1C8E52D2007CF021 /* 1.png in Resources */,
 				629ED2D81C7298F000A29105 /* Sparkle.png in Resources */,
 				629ED2D51C7298F000A29105 /* Smoke.png in Resources */,
 			);
