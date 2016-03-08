@@ -8,6 +8,10 @@
 
 import UIKit
 
+let clear = UIColor.clearColor()
+let light = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+let dark = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+
 protocol TTableViewCellDelegate{
     func check()
 }
@@ -19,6 +23,8 @@ class TTableViewCell: MaterialTableViewCell {
     var sign:FlatButton?
     
     var tDelegate: TTableViewCellDelegate?
+    
+    var label: UILabel?
     
     func setFavor(){
         if(checked){
@@ -98,12 +104,28 @@ class TTableViewCell: MaterialTableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = light
+        
+        self.selectionStyle = UITableViewCellSelectionStyle.None
+
         self.textLabel?.textColor = UIColor.blackColor()
         self.textLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 40)
         self.textLabel?.textAlignment = NSTextAlignment.Center
-        self.selectionStyle = UITableViewCellSelectionStyle.None
         self.textLabel?.adjustsFontSizeToFitWidth = true
+        /*
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurView = UIVisualEffectView(frame: self.frame)
+        blurView.effect = blurEffect
+        
+        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
+        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+        vibrancyView.frame = self.frame
+        vibrancyView.contentView.addSubview(self.label!)
+
+        blurView.contentView.addSubview(vibrancyView)
+        
+        self.addSubview(blurView)
+        */
         
         sign = FlatButton(frame: CGRectMake(self.frame.width, self.frame.height/2-12, 24, 24))
         sign?.backgroundColor = red_light

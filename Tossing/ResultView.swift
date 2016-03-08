@@ -44,8 +44,6 @@ class ResultView: UIView {
         let width = finalFrame.width
         let height = finalFrame.height
         
-        self.backgroundColor = UIColor.whiteColor()
-        
         label_result = LTMorphingLabel(frame: CGRectMake(0, 0, width, height-50))
         label_result?.text = "1"
         label_result!.backgroundColor = UIColor.clearColor()
@@ -81,7 +79,7 @@ class ResultView: UIView {
         self.layer.cornerRadius = 5
         self.addSubview(btn_delete!)
         
-        self.backgroundColor=UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+        self.backgroundColor=UIColor(red: 0, green: 0, blue: 0, alpha: 0.9)
     }
 
     required init?(coder aDecoder: NSCoder) {

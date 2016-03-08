@@ -114,7 +114,7 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(canEditing == 0){
-            let title = table_listTable.cellForRowAtIndexPath(indexPath)?.textLabel?.text
+            let title = (table_listTable.cellForRowAtIndexPath(indexPath) as! TTableViewCell).textLabel?.text
             let newVC = DetailViewController(title: title!)
             //newVC.modalTransitionStyle = UIModalTransitionStyle.PartialCurl
             self.presentViewController(newVC, animated: true, completion: nil)
