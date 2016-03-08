@@ -224,7 +224,7 @@ class ListViewController: UIViewController{
         self.view.addSubview(btn_edit)
         
         //self.view.addSubview(stackView_stack)
-        let bgimg = UIImage(named: "1")
+        let bgimg = UIImage(named: "11")
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
         

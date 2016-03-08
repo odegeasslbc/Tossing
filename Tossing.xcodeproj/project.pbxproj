@@ -15,6 +15,7 @@
 		623E66581C8E52D2007CF021 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 623E66551C8E52D2007CF021 /* 2.png */; };
 		623E66591C8E52D2007CF021 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 623E66561C8E52D2007CF021 /* 3.png */; };
 		623E665A1C8E52D2007CF021 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 623E66571C8E52D2007CF021 /* 1.png */; };
+		623E665C1C8E558D007CF021 /* 11.png in Resources */ = {isa = PBXBuildFile; fileRef = 623E665B1C8E558D007CF021 /* 11.png */; };
 		6243F8E41C8000B500F76646 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6243F8E31C8000B500F76646 /* EditButton.swift */; };
 		6243F8E61C803EA100F76646 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8E51C803EA100F76646 /* bg.png */; };
 		6243F8E81C80437700F76646 /* paper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6243F8E71C80437700F76646 /* paper.jpg */; };
@@ -189,6 +190,7 @@
 		623E66551C8E52D2007CF021 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		623E66561C8E52D2007CF021 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		623E66571C8E52D2007CF021 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		623E665B1C8E558D007CF021 /* 11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 11.png; sourceTree = "<group>"; };
 		6243F8E31C8000B500F76646 /* EditButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
 		6243F8E51C803EA100F76646 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		6243F8E71C80437700F76646 /* paper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = paper.jpg; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				6243F8E91C80480500F76646 /* snowhill.png */,
 				6243F8EB1C80481800F76646 /* hills.jpg */,
 				623E66551C8E52D2007CF021 /* 2.png */,
+				623E665B1C8E558D007CF021 /* 11.png */,
 				623E66561C8E52D2007CF021 /* 3.png */,
 				623E66571C8E52D2007CF021 /* 1.png */,
 				6243F8E71C80437700F76646 /* paper.jpg */,
@@ -658,6 +661,7 @@
 				627398C21C7BC5F4008799EF /* Roboto-Regular.ttf in Resources */,
 				629ED2CF1C7298F000A29105 /* Fire.png in Resources */,
 				629ED2761C7268CB00A29105 /* Assets.xcassets in Resources */,
+				623E665C1C8E558D007CF021 /* 11.png in Resources */,
 				629ED2711C7268CB00A29105 /* Main.storyboard in Resources */,
 				623E665A1C8E52D2007CF021 /* 1.png in Resources */,
 				629ED2D81C7298F000A29105 /* Sparkle.png in Resources */,
