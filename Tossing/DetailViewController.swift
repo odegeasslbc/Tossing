@@ -144,7 +144,8 @@ class DetailViewController: UIViewController{
 
     let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/5, 80,50))
     let btn_get = FlatButton(frame: CGRectMake(screen.width/2-80,screen.height*3/5 + 80, 160, 140))
-    let btn_list = FlatButton(frame: CGRectMake(screen.width-120, 30, 100, 55))
+    
+    let btn_list = TossButton(frame: CGRectMake(screen.width-120, 30, 100, 55), normalText: "Back", highlightText: "Back")
 
     var resultView: ResultView?
     
@@ -295,16 +296,6 @@ class DetailViewController: UIViewController{
         let blurEffect = UIBlurEffect(style: .Light)
         uiview_blockView.effect = blurEffect
         
-        
-        //allocate all the positions in stack view
-        //stackView_stack.frame = self.view.frame
-        btn_list.center.x = self.view.frame.width - 50
-        
-        btn_list.setTitle("List", forState: UIControlState.Normal)
-        btn_list.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btn_list.setTitleColor(red_light, forState: UIControlState.Highlighted)
-        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 35)
-        btn_list.backgroundColor = UIColor.clearColor()
         btn_list.addTarget(self, action: "backToList", forControlEvents: UIControlEvents.TouchUpInside)
         btn_list.pulseColor = red
         self.view.addSubview(btn_list)
@@ -330,6 +321,18 @@ class DetailViewController: UIViewController{
         textField_newItem.titleLabel = UILabel()
         textField_newItem.titleLabelColor = MaterialColor.grey.base
         textField_newItem.titleLabelActiveColor = red_light
+        textField_newItem.clearButtonMode = .WhileEditing
+        
+        let image = UIImage(named: "ic_close_white_3x")?.imageWithRenderingMode(.AlwaysTemplate)
+        let clearButton: FlatButton = FlatButton()
+        clearButton.pulseColor = MaterialColor.grey.base
+        clearButton.pulseScale = false
+        clearButton.tintColor = MaterialColor.grey.base
+        clearButton.setImage(image, forState: .Normal)
+        clearButton.setImage(image, forState: .Highlighted)
+        
+        textField_newItem.clearButton = clearButton
+        
         self.view.addSubview(textField_newItem)
         
         btn_add.backgroundColor=UIColor.clearColor()

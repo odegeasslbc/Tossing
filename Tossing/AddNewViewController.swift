@@ -43,6 +43,11 @@ extension AddNewViewController: UITableViewDataSource, UITableViewDelegate{
         alert.addButton("Delete", action: {
             self.items.removeAtIndex(indexPath.section)
             tableView.deleteSections(NSIndexSet(index:indexPath.section), withRowAnimation: .Right)
+            if(self.items.count==0){
+                if(self.label_new.text == "" || self.label_new.text == "New"){
+                    self.btn_list.normal()
+                }
+            }
         })
         alert.showNotice(itemName!, subTitle: "are you sure to delete it?",closeButtonTitle: "Cancel")
         
@@ -144,7 +149,8 @@ class AddNewViewController: UIViewController{
     
     let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/4, 80,50))
     let btn_done = FlatButton(frame: CGRectMake(screen.width-120, screen.height*3/4+60, 100,50))
-    let btn_list = FlatButton(frame: CGRectMake(screen.width-120, 30, 100, 55))
+
+    let btn_list = TossButton(frame: CGRectMake(screen.width-110, 30, 100, 55), normalText: "Back", highlightText: "Save")
 
     let uiview_blockView = UIVisualEffectView(frame: CGRectMake(0, 0, screen.width, screen.height))
     
@@ -226,7 +232,7 @@ class AddNewViewController: UIViewController{
                 items.append(textField_newItem.text!)
                 table_itemTable.reloadData()
                 textField_newItem.text = ""
-                btn_list.setTitle("Save", forState: UIControlState.Normal)
+                btn_list.highLight()
             }
         }
     }
@@ -237,7 +243,7 @@ class AddNewViewController: UIViewController{
             if(textField_title.text != ""){
                 label_new.text = textField_title.text
                 label_new.textColor = red_light
-                btn_list.setTitle("Save", forState: UIControlState.Normal)
+                btn_list.highLight()
                 textField_title.text = ""
             }
         }
@@ -307,13 +313,8 @@ class AddNewViewController: UIViewController{
         uiview_blockView.effect = blurEffect
         //uiview_blockView.alpha = 0.8
         
-        btn_list.center.x = self.view.frame.width - 50
+        //btn_list.center.x = self.view.frame.width - 50
         
-        btn_list.setTitle("Back", forState: UIControlState.Normal)
-        btn_list.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btn_list.setTitleColor(red_light, forState: UIControlState.Highlighted)
-        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 33)
-        btn_list.backgroundColor = UIColor.clearColor()
         btn_list.addTarget(self, action: "backToList", forControlEvents: UIControlEvents.TouchUpInside)
         btn_list.pulseColor = red
         self.view.addSubview(btn_list)
@@ -326,6 +327,15 @@ class AddNewViewController: UIViewController{
         //label_new.morphingEffect = LTMorphingEffect.Scale
         self.view.addSubview(label_new)
         
+        
+        let image = UIImage(named: "ic_close_white_3x")?.imageWithRenderingMode(.AlwaysTemplate)
+        let clearButton: FlatButton = FlatButton()
+        clearButton.pulseColor = MaterialColor.grey.base
+        clearButton.pulseScale = false
+        clearButton.tintColor = MaterialColor.grey.base
+        clearButton.setImage(image, forState: .Normal)
+        clearButton.setImage(image, forState: .Highlighted)
+        
         textField_newItem.backgroundColor = UIColor.clearColor()
         textField_newItem.clearButtonMode = UITextFieldViewMode.WhileEditing
         textField_newItem.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 40)
@@ -335,6 +345,8 @@ class AddNewViewController: UIViewController{
         textField_newItem.titleLabel = UILabel()
         textField_newItem.titleLabelColor = MaterialColor.grey.base
         textField_newItem.titleLabelActiveColor = red_light
+        textField_newItem.clearButtonMode = .WhileEditing
+        textField_newItem.clearButton = clearButton
         
         textField_title.backgroundColor = UIColor.clearColor()
         textField_title.clearButtonMode = UITextFieldViewMode.WhileEditing
@@ -345,6 +357,8 @@ class AddNewViewController: UIViewController{
         textField_title.titleLabel = UILabel()
         textField_title.titleLabelColor = MaterialColor.grey.base
         textField_title.titleLabelActiveColor = red_light
+        textField_title.clearButtonMode = .WhileEditing
+        textField_title.clearButton = clearButton
         
         btn_add.backgroundColor=UIColor.clearColor()
         btn_add.layer.cornerRadius = 5

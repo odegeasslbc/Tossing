@@ -129,7 +129,7 @@ class TTableViewCell: MaterialTableViewCell {
         leftLabel.backgroundColor = randomColor()
         self.addSubview(leftLabel)
         
-        let bgView = UIView(frame: CGRectMake(0,0,screen.width-60,screen.height/10))
+        let bgView = UIView(frame: CGRectMake(0,0,screen.width-40,screen.height/10))
         bgView.backgroundColor = dark
         self.addSubview(bgView)
         self.sendSubviewToBack(bgView)
@@ -141,7 +141,7 @@ class TTableViewCell: MaterialTableViewCell {
         sign?.layer.cornerRadius = 12
         
         self.addSubview(sign!)
-        
+        self.hideSign()
         pulseColor = red
     }
     

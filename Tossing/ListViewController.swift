@@ -11,7 +11,7 @@ import UIKit
 let screen = UIScreen.mainScreen().bounds
 
 var lists = [List]()
-let table_listTable = TTableView(frame: CGRectMake(30, 100, screen.width-60, screen.height-240))
+let table_listTable = TTableView(frame: CGRectMake(20, 100, screen.width-40, screen.height-240))
 
 var dbFilePath: String!
 
@@ -176,7 +176,7 @@ class ListViewController: UIViewController{
     let label_list = UILabel(frame: CGRectMake(18, 30, screen.width-18, 60))
     let animeView_effectView = UIView(frame: CGRectMake(0, 0, 1, 1))
     
-    let btn_edit = EditButton(frame: CGRectMake(screen.width-110, 30, 100, 55))
+    let btn_edit = TossButton(frame: CGRectMake(screen.width-110, 30, 100, 55), normalText: "Edit", highlightText: "Editing")
     let btn_add = FabButton(frame: CGRectMake(screen.width/2 - 32, screen.height-110, 64, 64))
 
     var previewVC:DetailViewController?
@@ -190,7 +190,7 @@ class ListViewController: UIViewController{
     func edit(){
         if(canEditing==0){
             canEditing = 1
-            btn_edit.editing()
+            btn_edit.highLight()
             table_listTable.reloadData()
         }else{
             canEditing = 0
@@ -227,16 +227,12 @@ class ListViewController: UIViewController{
         btn_add.layer.cornerRadius = 32
         btn_add.addTarget(self, action: "showNewAdd", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(btn_add)
-        
-        //btn_edit.setTitle("", forState: UIControlState.Normal)
-        //btn_edit.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        //btn_edit.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 41)
-        //btn_edit.titleLabel?.textAlignment = NSTextAlignment.Center
+
         btn_edit.addTarget(self, action: "edit", forControlEvents: .TouchUpInside)
         self.view.addSubview(btn_edit)
         
         //self.view.addSubview(stackView_stack)
-        let bgimg = UIImage(named: "11")
+        let bgimg = UIImage(named: "bg")
         let bg = UIImageView(frame: screen)
         bg.image = bgimg
         
