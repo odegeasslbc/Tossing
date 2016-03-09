@@ -151,6 +151,8 @@ class DetailViewController: UIViewController{
     
     var list:String?
     
+    let bg = UIImageView(frame: screen)
+
     var gesture = UIPanGestureRecognizer()
     var getCounts = 1
         //************ table view **************
@@ -180,6 +182,8 @@ class DetailViewController: UIViewController{
 
     func backToList(){
         self.resultView?.removeFromSuperview()
+        print("prase")
+        self.navigationController?.popToRootViewControllerAnimated(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -358,8 +362,6 @@ class DetailViewController: UIViewController{
         let initFrame = CGRectMake(frame.minX, -frame.height, frame.width, frame.height)
         resultView = ResultView(initFrame: initFrame, finalFrame: frame)
         
-        let bgimg = UIImage(named: "3")
-        let bg = UIImageView(frame: screen)
         bg.image = bgimg
         
         let Effect = UIBlurEffect(style: .Light)
@@ -371,6 +373,10 @@ class DetailViewController: UIViewController{
         
         self.view.addSubview(bg)
         self.view.sendSubviewToBack(bg)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        bg.image = bgimg
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

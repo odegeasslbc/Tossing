@@ -8,11 +8,7 @@
 
 import UIKit
 
-let clear = UIColor.clearColor()
-let light = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
-let dark_1 = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
-let dark_7 = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5)
-let cellBgColor = UIColor(red: 238/255, green: 207/255, blue: 179/255, alpha: 1)
+
 
 protocol TTableViewCellDelegate{
     func check()

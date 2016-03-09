@@ -8,8 +8,7 @@
 
 import UIKit
 
-let red = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 1)
-let red_light = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 0.8)
+
 
 
 class ResultView: UIView {

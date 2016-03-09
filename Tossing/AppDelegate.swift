@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -156,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return urls[urls.count-1]
     }()
 
-    /*
+    
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = NSBundle.mainBundle().URLForResource("Tossing", withExtension: "momd")!
@@ -211,7 +212,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    */
 
 }
 

@@ -16,16 +16,26 @@ let table_listTable = TTableView(frame: CGRectMake(20, 100, screen.width-40, scr
 var dbFilePath: String!
 
 var bgColor = UIColor(red: 1, green: 160/255, blue: 165/255, alpha: 1)
-
+let red = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 1)
+let red_light = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 0.8)
 var bgimg = UIImage(named: "11")
+let clear = UIColor.clearColor()
+let light = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+let dark_1 = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
+let dark_7 = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5)
+let cellBgColor = UIColor(red: 238/255, green: 207/255, blue: 179/255, alpha: 1)
+let blurInitialFrame = CGRectMake(0,-screen.height,screen.width,screen.height)
 
+var shouldBlur = true
+var firstOpen = 1
+var justOpen = true
 
 struct List {
     let title:String
     var star:Bool
 }
 
-extension ListViewController:  UIViewControllerPreviewingDelegate {
+extension ListViewController: UIViewControllerPreviewingDelegate {
     
     //pop
     func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
@@ -51,7 +61,7 @@ extension ListViewController:  UIViewControllerPreviewingDelegate {
     }
 }
 
-extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableViewCellDelegate{
+extension ListViewController: UITableViewDataSource, UITableViewDelegate, TTableViewCellDelegate{
     
     func check() {
         queryLists()
@@ -173,11 +183,10 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
 
 }
 
-class ListViewController: UIViewController, UIPickerViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class ListViewController: UIViewController{
+
+    @IBOutlet weak var btn_list: FlatButton!
     
-    
-    //let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
-    let btn_list = FlatButton(frame: CGRectMake(0, 30, 120, 60))
     let animeView_effectView = UIView(frame: CGRectMake(0, 0, 1, 1))
     
     let btn_edit = TossButton(frame: CGRectMake(screen.width-110, 30, 100, 55), normalText: "Edit", highlightText: "Editing")
@@ -189,6 +198,10 @@ class ListViewController: UIViewController, UIPickerViewDelegate, UIImagePickerC
     var tap = UITapGestureRecognizer()
     let bg = UIImageView(frame: screen)
 
+    
+    let blurEffect = UIBlurEffect(style: .Light)
+    let blurView = UIVisualEffectView(frame: blurInitialFrame)
+    
     func showNewAdd(){
         let newVC = AddNewViewController()
         self.presentViewController(newVC, animated: true, completion: nil)
@@ -204,77 +217,6 @@ class ListViewController: UIViewController, UIPickerViewDelegate, UIImagePickerC
             btn_edit.normal()
             table_listTable.reloadData()
         }
-    }
-    
-    func imagePicker(){
-        let pickerC = UIImagePickerController()
-        
-        pickerC.delegate = self
-  
-        self.presentViewController(pickerC, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        bgimg = image
-        self.dismissViewControllerAnimated(true, completion: nil);
-    }
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        self.modalPresentationStyle = .Custom
-
-        btn_add.center.x = self.view.center.x
-        table_listTable.center.x = self.view.center.x
-
-        btn_list.setTitle("List", forState: .Normal)
-        btn_list.setTitleColor(red_light, forState: .Normal)
-        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
-        btn_list.addTarget(self, action: "imagePicker", forControlEvents: .TouchUpInside)
-        self.view.addSubview(btn_list)
-        
-        table_listTable.dataSource = self
-        table_listTable.delegate = self
-        table_listTable.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.view.addSubview(table_listTable)
-        
-
-        let img: UIImage? = UIImage(named: "add_circle")
-        btn_add.setImage(img, forState: .Normal)
-        btn_add.setImage(img, forState: .Highlighted)
-        btn_add.layer.cornerRadius = 32
-        btn_add.addTarget(self, action: "showNewAdd", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(btn_add)
-
-        btn_edit.addTarget(self, action: "edit", forControlEvents: .TouchUpInside)
-        self.view.addSubview(btn_edit)
-        
-        //self.view.addSubview(stackView_stack)
-
-        bg.image = bgimg
-        
-        let blurEffect = UIBlurEffect(style: .Light)
-        let blurView = UIVisualEffectView(frame: self.view.frame)
-        blurView.effect = blurEffect
-        
-        self.view.addSubview(blurView)
-        self.view.sendSubviewToBack(blurView)
-        
-        self.view.addSubview(bg)
-        self.view.sendSubviewToBack(bg)
-        
-        canEditing = 0
-        
-        //self.view.backgroundColor = bgColor
-        if #available(iOS 9.0, *) {
-            if traitCollection.forceTouchCapability == .Available{
-                registerForPreviewingWithDelegate(self, sourceView: table_listTable)
-            }
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     
@@ -305,6 +247,57 @@ class ListViewController: UIViewController, UIPickerViewDelegate, UIImagePickerC
         
     }
     
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        self.modalPresentationStyle = .Custom
+
+        btn_add.center.x = self.view.center.x
+        table_listTable.center.x = self.view.center.x
+
+        btn_list.setTitle("List", forState: .Normal)
+        btn_list.setTitleColor(red_light, forState: .Normal)
+        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
+        //btn_list.addTarget(self, action: "showSettingView", forControlEvents: .TouchUpInside)
+        self.view.addSubview(btn_list)
+        
+        table_listTable.dataSource = self
+        table_listTable.delegate = self
+        table_listTable.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.view.addSubview(table_listTable)
+        
+
+        let img: UIImage? = UIImage(named: "add_circle")
+        btn_add.setImage(img, forState: .Normal)
+        btn_add.setImage(img, forState: .Highlighted)
+        btn_add.layer.cornerRadius = 32
+        btn_add.addTarget(self, action: "showNewAdd", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(btn_add)
+
+        btn_edit.addTarget(self, action: "edit", forControlEvents: .TouchUpInside)
+        self.view.addSubview(btn_edit)
+        
+        //self.view.addSubview(stackView_stack)
+
+        
+        self.view.addSubview(bg)
+        self.view.sendSubviewToBack(bg)
+        
+        canEditing = 0
+        
+        //self.view.backgroundColor = bgColor
+        if #available(iOS 9.0, *) {
+            if traitCollection.forceTouchCapability == .Available{
+                registerForPreviewingWithDelegate(self, sourceView: table_listTable)
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        self.title = "listVC"
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
     override func viewWillAppear(animated: Bool) {
         
         queryLists()
@@ -312,6 +305,25 @@ class ListViewController: UIViewController, UIPickerViewDelegate, UIImagePickerC
         table_listTable.reloadData()
         
         bg.image = bgimg
+        
+
+        if(justOpen && shouldBlur){
+            blurView.frame = screen
+            blurView.effect = blurEffect
+
+            self.view.addSubview(blurView)
+            self.view.sendSubviewToBack(blurView)
+            self.view.sendSubviewToBack(bg)
+            justOpen = false
+        }
+        else if(!justOpen && shouldBlur){
+            
+            UIView.animateWithDuration(0.5, delay: 0.8, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.blurView.frame = screen
+            }, completion: nil)
+            
+        }
+
     }
     
     override func didReceiveMemoryWarning() {

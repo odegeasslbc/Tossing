@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sNX-Ry-lPl">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--List View Controller-->
@@ -16,11 +17,132 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XN8-Lk-QLK" customClass="FlatButton" customModule="Tossing" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="30" width="120" height="60"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="seK-Wu-Wbe" kind="show" identifier="PushSegue" id="TGX-SQ-pKL"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="i6K-bm-FY5"/>
+                    <connections>
+                        <outlet property="btn_list" destination="XN8-Lk-QLK" id="5Kv-NQ-L2c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="358" y="659"/>
+        </scene>
+        <!--Setting View Controller-->
+        <scene sceneID="r2y-mA-Rn4">
+            <objects>
+                <viewController id="seK-Wu-Wbe" customClass="SettingViewController" customModule="Tossing" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U3I-yL-ZCf"/>
+                        <viewControllerLayoutGuide type="bottom" id="HLH-55-JmU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="D9b-lT-Wum">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QVZ-jy-E71" customClass="FlatButton" customModule="Tossing" customModuleProvider="target">
+                                <rect key="frame" x="20" y="20" width="120" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="6Wy-Bl-h3z">
+                                        <variation key="widthClass=compact" constant="100"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="50" id="Kjo-lG-9uQ"/>
+                                    <constraint firstAttribute="height" constant="60" id="reN-oE-CcC">
+                                        <variation key="widthClass=compact" constant="55"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="6Wy-Bl-h3z"/>
+                                        <exclude reference="reN-oE-CcC"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="6Wy-Bl-h3z"/>
+                                        <exclude reference="Kjo-lG-9uQ"/>
+                                        <include reference="reN-oE-CcC"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="back:" destination="seK-Wu-Wbe" eventType="touchUpInside" id="yef-mI-X9o"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.49459447443342974" blue="0.46091849537862084" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="QVZ-jy-E71" firstAttribute="top" secondItem="U3I-yL-ZCf" secondAttribute="bottom" id="4cP-l4-4NC"/>
+                            <constraint firstItem="QVZ-jy-E71" firstAttribute="top" secondItem="U3I-yL-ZCf" secondAttribute="bottom" constant="30" id="Uvt-pM-iNI">
+                                <variation key="widthClass=compact" constant="10"/>
+                            </constraint>
+                            <constraint firstItem="QVZ-jy-E71" firstAttribute="trailing" secondItem="D9b-lT-Wum" secondAttribute="trailingMargin" constant="10" id="WCZ-Hs-eyU">
+                                <variation key="widthClass=compact" constant="10"/>
+                            </constraint>
+                            <constraint firstItem="QVZ-jy-E71" firstAttribute="leading" secondItem="D9b-lT-Wum" secondAttribute="leadingMargin" id="flw-bP-N6m"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="QVZ-jy-E71"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="4cP-l4-4NC"/>
+                                <exclude reference="Uvt-pM-iNI"/>
+                                <exclude reference="WCZ-Hs-eyU"/>
+                                <exclude reference="flw-bP-N6m"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="QVZ-jy-E71"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="4cP-l4-4NC"/>
+                                <include reference="Uvt-pM-iNI"/>
+                                <include reference="WCZ-Hs-eyU"/>
+                                <exclude reference="flw-bP-N6m"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="btn_back" destination="QVZ-jy-E71" id="3vI-hT-LGf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i5i-xM-a1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1083" y="659"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zBQ-5p-CH1">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="sNX-Ry-lPl" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aQI-WR-4nq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <outlet property="delegate" destination="UaU-Lv-8Oa" id="Mzb-2W-OHg"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="rJR-dr-Zje"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NkZ-6e-KL9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="UaU-Lv-8Oa" customClass="NavigationControllerDelegate" customModule="Tossing" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="358" y="-187"/>
         </scene>
     </scenes>
 </document>

@@ -156,6 +156,8 @@ class AddNewViewController: UIViewController{
     
     var items = [String]()
     
+    let bg = UIImageView(frame: screen)
+
     
     //**** functions ****
     func backToList(){
@@ -391,8 +393,7 @@ class AddNewViewController: UIViewController{
         
         self.modalPresentationStyle = .Custom
 
-        let bgimg = UIImage(named: "2")
-        let bg = UIImageView(frame: screen)
+        //let bgimg = UIImage(named: "2")
         bg.image = bgimg
         
         let Effect = UIBlurEffect(style: .Light)
@@ -408,6 +409,10 @@ class AddNewViewController: UIViewController{
         
         self.view.backgroundColor = UIColor.clearColor()
 
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        bg.image = bgimg
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
