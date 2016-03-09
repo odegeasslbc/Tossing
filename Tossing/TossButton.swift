@@ -47,7 +47,7 @@ class TossButton: FlatButton {
     }
     
     func normal(){
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = light
         textLabel.textColor = UIColor.blackColor()
         textLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 35)
         

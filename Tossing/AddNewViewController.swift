@@ -87,7 +87,7 @@ extension AddNewViewController: UITextFieldDelegate{
         UIView.animateWithDuration(0.3, animations: {
             textField.frame = CGRectMake(30, screen.height-350, screen.width-160, 50)
             if(textField.tag == 1){
-                self.btn_add.frame = CGRectMake(screen.width-110, screen.height-350, 80,50)
+                self.btn_add.frame = CGRectMake(screen.width-120, screen.height-350, 100,50)
                 self.btn_add.backgroundColor = red_light
                 self.btn_add.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             }else if(textField.tag == 2){
@@ -104,14 +104,14 @@ extension AddNewViewController: UITextFieldDelegate{
         UIView.animateWithDuration(0.3, animations: {
             if(textField.tag == 1){
                 textField.frame = CGRectMake(30, screen.height*3/4, screen.width-160, 40)
-                self.btn_add.frame = CGRectMake(screen.width-110, screen.height*3/4, 80,50)
-                self.btn_add.backgroundColor = UIColor.clearColor()
+                self.btn_add.frame = CGRectMake(screen.width-120, screen.height*3/4, 100,50)
+                self.btn_add.backgroundColor = light
                 self.btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
                 
             }else if(textField.tag == 2){
                 textField.frame = CGRectMake(30, screen.height*3/4+60, screen.width-160, 40)
                 self.btn_done.frame = CGRectMake(screen.width-120, screen.height*3/4+60, 100,50)
-                self.btn_done.backgroundColor = UIColor.clearColor()
+                self.btn_done.backgroundColor = light
                 self.btn_done.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             }
             }, completion: {
@@ -147,7 +147,7 @@ class AddNewViewController: UIViewController{
     let textField_newItem = TextField(frame: CGRectMake(30, screen.height*3/4, screen.width-160, 40))
     let textField_title = TextField(frame: CGRectMake(30, screen.height*3/4 + 60, screen.width-160, 40))
     
-    let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/4, 80,50))
+    let btn_add = FlatButton(frame: CGRectMake(screen.width-120, screen.height*3/4, 100,50))
     let btn_done = FlatButton(frame: CGRectMake(screen.width-120, screen.height*3/4+60, 100,50))
 
     let btn_list = TossButton(frame: CGRectMake(screen.width-110, 30, 100, 55), normalText: "Back", highlightText: "Save")
@@ -362,7 +362,7 @@ class AddNewViewController: UIViewController{
         textField_title.clearButtonMode = .WhileEditing
         textField_title.clearButton = clearButton
         
-        btn_add.backgroundColor=UIColor.clearColor()
+        btn_add.backgroundColor=light
         btn_add.layer.cornerRadius = 5
         btn_add.setTitle("add", forState: UIControlState.Normal)
         btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -371,7 +371,7 @@ class AddNewViewController: UIViewController{
         btn_add.addTarget(self, action: "add", forControlEvents: UIControlEvents.TouchUpInside)
         btn_add.pulseColor = red
 
-        btn_done.backgroundColor=UIColor.clearColor()
+        btn_done.backgroundColor=light
         btn_done.layer.cornerRadius = 5
         btn_done.setTitle("done", forState: UIControlState.Normal)
         btn_done.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)

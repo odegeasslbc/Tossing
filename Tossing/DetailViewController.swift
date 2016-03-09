@@ -117,7 +117,7 @@ extension DetailViewController: UITextFieldDelegate{
                 textField.borderStyle = UITextBorderStyle.None
                 self.uiview_blockView.removeFromSuperview()
                 
-                self.btn_add.backgroundColor = UIColor.clearColor()
+                self.btn_add.backgroundColor = light
                 self.btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         })
     }
@@ -145,7 +145,7 @@ class DetailViewController: UIViewController{
     let btn_add = FlatButton(frame: CGRectMake(screen.width-110, screen.height*3/5, 80,50))
     let btn_get = FlatButton(frame: CGRectMake(screen.width/2-80,screen.height*3/5 + 80, 160, 140))
     
-    let btn_list = TossButton(frame: CGRectMake(screen.width-120, 30, 100, 55), normalText: "Back", highlightText: "Back")
+    let btn_list = TossButton(frame: CGRectMake(screen.width-110, 30, 100, 55), normalText: "Back", highlightText: "Back")
 
     var resultView: ResultView?
     
@@ -339,7 +339,7 @@ class DetailViewController: UIViewController{
         
         self.view.addSubview(textField_newItem)
         
-        btn_add.backgroundColor=UIColor.clearColor()
+        btn_add.backgroundColor = light
         btn_add.layer.cornerRadius = 5
         btn_add.setTitle("add", forState: UIControlState.Normal)
         btn_add.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -349,7 +349,7 @@ class DetailViewController: UIViewController{
         btn_add.pulseColor = red
         self.view.addSubview(btn_add)
         
-        btn_get.backgroundColor=UIColor.clearColor()
+        btn_get.backgroundColor = light
         btn_get.setTitle("GET", forState: UIControlState.Normal)
         btn_get.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         btn_get.setTitleColor(red_light, forState: UIControlState.Highlighted)

@@ -13,7 +13,8 @@ extension SettingViewController: ImagePickerDelegate{
     func imagePicker(){
         let pickerC = ImagePickerController()
         pickerC.imageLimit = 1
-        
+        Configuration.backgroundColor = red_light
+        Configuration.mainColor = red_light
         Configuration.doneButtonTitle = "Finish"
         Configuration.noImagesTitle = "Sorry! There are no images here!"
         pickerC.delegate = self
@@ -22,13 +23,16 @@ extension SettingViewController: ImagePickerDelegate{
     }
     
     func wrapperDidPress(images: [UIImage]){
-        bgimg = images[0]
+        
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
     func doneButtonDidPress(images: [UIImage]){
         bgimg = images[0]
         self.dismissViewControllerAnimated(true, completion: nil);
+        
+        
+        
     }
     
     func cancelButtonDidPress(){
@@ -54,16 +58,19 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
     func materialSwitchStateChanged(control: MaterialSwitch) {
         if control.switchState == .On{
             shouldBlur = true
+            
         }else if control.switchState == .Off{
             shouldBlur = false
+            
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        btn_back.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        btn_back.setTitleColor(UIColor.blackColor(), forState: .Normal)
         btn_back.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30)
+        btn_back.backgroundColor = light
         self.view.backgroundColor = red
         
         label_blur.text = "Blur"

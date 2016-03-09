@@ -21,6 +21,8 @@ let red_light = UIColor(red: 0.964, green: 0.276, blue: 0.244, alpha: 0.8)
 var bgimg = UIImage(named: "11")
 let clear = UIColor.clearColor()
 let light = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+let light_8 = UIColor(red: 1, green: 1, blue: 1, alpha: 0.8)
+
 let dark_1 = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
 let dark_7 = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5)
 let cellBgColor = UIColor(red: 238/255, green: 207/255, blue: 179/255, alpha: 1)
@@ -252,6 +254,7 @@ class ListViewController: UIViewController{
         super.viewDidLoad()
         self.modalPresentationStyle = .Custom
 
+        btn_list.backgroundColor = light
         btn_add.center.x = self.view.center.x
         table_listTable.center.x = self.view.center.x
 
