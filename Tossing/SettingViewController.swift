@@ -8,31 +8,60 @@
 
 import UIKit
 import ImagePicker
+import CoreData
+import AssetsLibrary
+
+@objc(ImageEntity)
+class ImageEntity: NSManagedObject {
+    @NSManaged var imageData: NSData
+}
+
+func getDocumentsURL() -> NSURL {
+    let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+    return documentsURL
+}
+
+func fileInDocumentsDirectory(filename: String) -> String {
+    
+    let fileURL = getDocumentsURL().URLByAppendingPathComponent(filename)
+    return fileURL.path!
+    
+}
+
+func saveImage(image:UIImage){
+    let imgData = UIImagePNGRepresentation(image)
+    let imagePath = fileInDocumentsDirectory("background_image")
+    _ = imgData?.writeToFile(imagePath, atomically: true)
+}
 
 extension SettingViewController: ImagePickerDelegate{
+    
+    
+    
     func imagePicker(){
         let pickerC = ImagePickerController()
         pickerC.imageLimit = 1
+        
         Configuration.backgroundColor = red_light
         Configuration.mainColor = red_light
         Configuration.doneButtonTitle = "Finish"
         Configuration.noImagesTitle = "Sorry! There are no images here!"
+        
         pickerC.delegate = self
         
         self.presentViewController(pickerC, animated: true, completion: nil)
     }
     
+    
+    
     func wrapperDidPress(images: [UIImage]){
-        
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
     func doneButtonDidPress(images: [UIImage]){
         bgimg = images[0]
+        saveImage(bgimg!)
         self.dismissViewControllerAnimated(true, completion: nil);
-        
-        
-        
     }
     
     func cancelButtonDidPress(){
@@ -55,13 +84,23 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    func saveBlur(blur:String){
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("Theme.plist")
+        let data: NSMutableArray = [blur]
+        
+        data.writeToFile(path, atomically: true)
+    }
+    
     func materialSwitchStateChanged(control: MaterialSwitch) {
         if control.switchState == .On{
             shouldBlur = true
+            saveBlur("yes")
             
         }else if control.switchState == .Off{
             shouldBlur = false
-            
+            saveBlur("no")
         }
     }
     
@@ -105,17 +144,6 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

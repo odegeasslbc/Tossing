@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+import AssetsLibrary
 
 let screen = UIScreen.mainScreen().bounds
 
@@ -301,14 +303,51 @@ class ListViewController: UIViewController{
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    func loadImage() {
+        let imagePath = fileInDocumentsDirectory("background_image")
+        let image = UIImage(contentsOfFile: imagePath)
+        if(image != nil){
+            bgimg = image
+        }else{
+            print("fail to load image")
+        }
+        bg.image = bgimg
+    }
+    
+    func loadBlur() {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("Theme.plist")
+        let fileManager = NSFileManager.defaultManager()
+        
+        // Check if file exists
+        if(!fileManager.fileExistsAtPath(path))
+        {
+            print("no")
+            // If it doesn't, copy it from the default file in the Resources folder
+            let bundle = NSBundle.mainBundle().pathForResource("Theme", ofType: "plist")
+            do{
+                try fileManager.copyItemAtPath(bundle!, toPath: path)
+            }catch{
+                print(error)
+            }
+        }
+        let data = NSMutableArray(contentsOfFile: path)
+        if data![0] as! String == "no"{
+            shouldBlur = false
+        }else{
+            shouldBlur = true
+        }
+    }
+    
     override func viewWillAppear(animated: Bool) {
         
         queryLists()
         
         table_listTable.reloadData()
         
-        bg.image = bgimg
-        
+        loadImage()
+        loadBlur()
 
         if(justOpen && shouldBlur){
             blurView.frame = screen

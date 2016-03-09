@@ -15,6 +15,8 @@
 		320CA5641C827B6100353D19 /* CapturePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320CA5631C827B6100353D19 /* CapturePreviewView.swift */; };
 		3216BB7E1C8FCEA300765B33 /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3216BB7D1C8FCEA300765B33 /* ImagePicker.framework */; };
 		3216BB801C8FD3B800765B33 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3216BB7F1C8FD3B800765B33 /* SettingViewController.swift */; };
+		322BA0491C90A2EA0027340D /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 322BA0471C90A2EA0027340D /* Model.xcdatamodeld */; };
+		322BA04D1C90B7C90027340D /* Theme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 322BA04C1C90B7C90027340D /* Theme.plist */; };
 		6243F8E41C8000B500F76646 /* TossButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6243F8E31C8000B500F76646 /* TossButton.swift */; };
 		627395C61C7B7BB4008799EF /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627395C51C7B7BB4008799EF /* ResultView.swift */; };
 		627395C81C7B861D008799EF /* SCLalertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627395C71C7B861D008799EF /* SCLalertView.swift */; };
@@ -184,6 +186,8 @@
 		320CA5631C827B6100353D19 /* CapturePreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CapturePreviewView.swift; sourceTree = "<group>"; };
 		3216BB7D1C8FCEA300765B33 /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = Pods/ImagePicker.framework; sourceTree = "<group>"; };
 		3216BB7F1C8FD3B800765B33 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		322BA0481C90A2EA0027340D /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		322BA04C1C90B7C90027340D /* Theme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Theme.plist; sourceTree = "<group>"; };
 		6243F8E31C8000B500F76646 /* TossButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TossButton.swift; sourceTree = "<group>"; };
 		627395C51C7B7BB4008799EF /* ResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		627395C71C7B861D008799EF /* SCLalertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCLalertView.swift; path = ../Tossing/SCLalertView.swift; sourceTree = "<group>"; };
@@ -454,6 +458,8 @@
 				629ED26B1C7268CB00A29105 /* AppDelegate.swift */,
 				629ED26D1C7268CB00A29105 /* ListViewController.swift */,
 				3216BB7F1C8FD3B800765B33 /* SettingViewController.swift */,
+				322BA04C1C90B7C90027340D /* Theme.plist */,
+				322BA0471C90A2EA0027340D /* Model.xcdatamodeld */,
 				629ED29E1C72699100A29105 /* AddNewViewController.swift */,
 				629ED29C1C72691700A29105 /* DetailViewController.swift */,
 				629ED2751C7268CB00A29105 /* Assets.xcassets */,
@@ -664,6 +670,7 @@
 				627398C31C7BC5F4008799EF /* Roboto-Thin.ttf in Resources */,
 				627398C21C7BC5F4008799EF /* Roboto-Regular.ttf in Resources */,
 				629ED2CF1C7298F000A29105 /* Fire.png in Resources */,
+				322BA04D1C90B7C90027340D /* Theme.plist in Resources */,
 				629ED2761C7268CB00A29105 /* Assets.xcassets in Resources */,
 				629ED2711C7268CB00A29105 /* Main.storyboard in Resources */,
 				629ED2D81C7298F000A29105 /* Sparkle.png in Resources */,
@@ -787,6 +794,7 @@
 				629ED2C01C7298F000A29105 /* LTMorphingLabel+Fall.swift in Sources */,
 				627398B51C7BC5F4008799EF /* MaterialTableViewCell.swift in Sources */,
 				627398AA1C7BC5F4008799EF /* MaterialEdgeInset.swift in Sources */,
+				322BA0491C90A2EA0027340D /* Model.xcdatamodeld in Sources */,
 				627398B81C7BC5F4008799EF /* MaterialView.swift in Sources */,
 				627398AC1C7BC5F4008799EF /* MaterialGravity.swift in Sources */,
 				627398B31C7BC5F4008799EF /* MaterialShape.swift in Sources */,
@@ -1125,6 +1133,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		322BA0471C90A2EA0027340D /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				322BA0481C90A2EA0027340D /* Model.xcdatamodel */,
+			);
+			currentVersion = 322BA0481C90A2EA0027340D /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 629ED2601C7268CB00A29105 /* Project object */;
 }
