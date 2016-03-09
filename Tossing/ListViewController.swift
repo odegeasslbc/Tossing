@@ -308,8 +308,6 @@ class ListViewController: UIViewController{
         let image = UIImage(contentsOfFile: imagePath)
         if(image != nil){
             bgimg = image
-        }else{
-            print("fail to load image")
         }
         bg.image = bgimg
     }
@@ -333,10 +331,12 @@ class ListViewController: UIViewController{
             }
         }
         let data = NSMutableArray(contentsOfFile: path)
-        if data![0] as! String == "no"{
-            shouldBlur = false
-        }else{
-            shouldBlur = true
+        if(data != nil){
+            if data![0] as! String == "no"{
+                shouldBlur = false
+            }else{
+                shouldBlur = true
+            }
         }
     }
     
