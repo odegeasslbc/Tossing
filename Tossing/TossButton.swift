@@ -25,9 +25,9 @@ class TossButton: FlatButton {
         case 2:
             return LTMorphingEffect.Evaporate
         case 3:
-            return LTMorphingEffect.Sparkle
-        case 4:
             return LTMorphingEffect.Scale
+        case 4:
+            return LTMorphingEffect.Sparkle
         case 5:
             return LTMorphingEffect.Burn
         case 6:
@@ -41,8 +41,8 @@ class TossButton: FlatButton {
         self.backgroundColor = red_light
         textLabel.textColor = UIColor.whiteColor()
         textLabel.font = UIFont(name: "AppleSDGothicNeo-Thin", size: 35)
-        
-        textLabel.morphingEffect = rdEffect(5)
+    
+        textLabel.morphingEffect = rdEffect(4)
         textLabel.text = highlightText!
     }
     

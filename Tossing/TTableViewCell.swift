@@ -98,7 +98,7 @@ class TTableViewCell: MaterialTableViewCell {
         
         UIView.transitionWithView(self.textLabel!, duration: 0.5, options: [.CurveEaseInOut, .TransitionCrossDissolve], animations: {
             self.textLabel?.textAlignment = .Left
-            self.sign?.frame = CGRectMake(self.frame.width-30, self.frame.height/2-12, 24, 24)
+            self.sign?.frame = CGRectMake(self.frame.width-35, self.frame.height/2-12, 24, 24)
 
             }, completion: nil)
     }
@@ -136,13 +136,13 @@ class TTableViewCell: MaterialTableViewCell {
         self.sendSubviewToBack(bgView)
         //self.backgroundColor = dark
         
-        sign = FlatButton(frame: CGRectMake(self.frame.width, self.frame.height/2-12, 24, 24))
+        sign = FlatButton(frame: CGRectMake(screen.width-40, self.frame.height/2-12, 24, 24))
         sign?.backgroundColor = red_light
         sign?.addTarget(self, action: "setFavor", forControlEvents: UIControlEvents.TouchUpInside)
         sign?.layer.cornerRadius = 12
         
         self.addSubview(sign!)
-        self.hideSign()
+        //self.hideSign()
         pulseColor = red
     }
     

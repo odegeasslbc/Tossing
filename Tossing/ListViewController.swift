@@ -57,14 +57,14 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
         queryLists()
         
         UIView.animateWithDuration(0.5, animations: {
-            table_listTable.center = CGPointMake(-screen.width/2+30, screen.height/2-20)
+            table_listTable.center = CGPointMake(-screen.width/2, screen.height/2-20)
             }, completion:
             {finished in
                 UIView.animateWithDuration(0.1, animations: {
                     table_listTable.reloadRowsAtIndexPaths(table_listTable.indexPathsForVisibleRows!, withRowAnimation: .None)
                     }, completion: {
                     finished in
-                        table_listTable.center = CGPointMake(screen.width*3/2-30, screen.height/2-20)
+                        table_listTable.center = CGPointMake(screen.width*3/2, screen.height/2-20)
 
                         UIView.animateWithDuration(0.5, animations: {
                             table_listTable.center = CGPointMake(screen.width/2, screen.height/2-20)
@@ -81,6 +81,7 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
         cell.textLabel?.text = list.title
         cell.checked = list.star
         cell.tDelegate = self
+        
         
         if(canEditing==0){
             cell.hideSign()
@@ -222,19 +223,10 @@ class ListViewController: UIViewController, UIPickerViewDelegate, UIImagePickerC
         
         super.viewDidLoad()
         self.modalPresentationStyle = .Custom
-        
-        //allocate all the positions in stack view
-        //stackView_stack.frame = self.view.frame
+
         btn_add.center.x = self.view.center.x
         table_listTable.center.x = self.view.center.x
-        /*
-        label_list.text = "List"
-        label_list.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
-        label_list.backgroundColor = UIColor.clearColor()
-        label_list.textColor = red_light
-        tap.addTarget(self, action: "imagePicker")
-        label_list.addGestureRecognizer(tap)
-        */
+
         btn_list.setTitle("List", forState: .Normal)
         btn_list.setTitleColor(red_light, forState: .Normal)
         btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
