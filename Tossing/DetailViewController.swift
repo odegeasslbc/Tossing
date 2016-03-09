@@ -376,7 +376,7 @@ class DetailViewController: UIViewController{
     }
     
     override func viewWillAppear(animated: Bool) {
-        bg.image = bgimg
+        bg.image = UIImage(named: "3")
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

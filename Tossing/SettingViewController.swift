@@ -60,6 +60,7 @@ extension SettingViewController: ImagePickerDelegate{
     
     func doneButtonDidPress(images: [UIImage]){
         bgimg = images[0]
+        bg_view.image = bgimg
         saveImage(bgimg!)
         self.dismissViewControllerAnimated(true, completion: nil);
     }
@@ -78,6 +79,8 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
     
     let blurSwitch = MaterialSwitch()
     let btn_imgPicker = FlatButton()
+    
+    var bg_view = UIImageView(frame: CGRectMake(30, 220, 90, 160))
     
     @IBAction func back(sender: AnyObject) {
         //self.dismissViewControllerAnimated(true, completion: nil)
@@ -126,18 +129,22 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
         blurSwitch.center = CGPoint(x: screen.width-50, y: 125)
         blurSwitch.delegate = self
         
-        btn_imgPicker.frame = CGRectMake(screen.width-100, 170, 80, 50)
+        btn_imgPicker.frame = CGRectMake(screen.width-90, 170, 80, 50)
+        //btn_imgPicker.backgroundColor = light
         btn_imgPicker.setTitle("pick", forState: .Normal)
         btn_imgPicker.addTarget(self, action: "imagePicker", forControlEvents: .TouchUpInside)
-        btn_imgPicker.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        btn_imgPicker.setTitleColor(dark_7, forState: .Normal)
         btn_imgPicker.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 25)
+        
+        bg_view.image = bgimg
+        
+        self.view.addSubview(bg_view)
+        
         self.view.addSubview(btn_imgPicker)
         self.view.addSubview(blurSwitch)
         
         self.view.addSubview(label_blur)
         self.view.addSubview(label_bg)
-
-        
     }
 
     override func didReceiveMemoryWarning() {

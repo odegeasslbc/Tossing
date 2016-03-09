@@ -393,7 +393,7 @@ class AddNewViewController: UIViewController{
         
         self.modalPresentationStyle = .Custom
 
-        //let bgimg = UIImage(named: "2")
+        let bgimg = UIImage(named: "2")
         bg.image = bgimg
         
         let Effect = UIBlurEffect(style: .Light)
@@ -412,7 +412,7 @@ class AddNewViewController: UIViewController{
     }
     
     override func viewWillAppear(animated: Bool) {
-        bg.image = bgimg
+        bg.image = UIImage(named: "2")
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
