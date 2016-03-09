@@ -17,6 +17,9 @@ var dbFilePath: String!
 
 var bgColor = UIColor(red: 1, green: 160/255, blue: 165/255, alpha: 1)
 
+var bgimg = UIImage(named: "11")
+
+
 struct List {
     let title:String
     var star:Bool
@@ -169,11 +172,11 @@ extension ListViewController:UITableViewDataSource, UITableViewDelegate, TTableV
 
 }
 
-class ListViewController: UIViewController{
+class ListViewController: UIViewController, UIPickerViewDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
     
     //let stackView_stack = UIStackView(frame: CGRectMake(0, 0, screen.width, screen.height))
-    let label_list = UILabel(frame: CGRectMake(18, 30, screen.width-18, 60))
+    let btn_list = FlatButton(frame: CGRectMake(0, 30, 120, 60))
     let animeView_effectView = UIView(frame: CGRectMake(0, 0, 1, 1))
     
     let btn_edit = TossButton(frame: CGRectMake(screen.width-110, 30, 100, 55), normalText: "Edit", highlightText: "Editing")
@@ -182,6 +185,9 @@ class ListViewController: UIViewController{
     var previewVC:DetailViewController?
     var canEditing = 0
     
+    var tap = UITapGestureRecognizer()
+    let bg = UIImageView(frame: screen)
+
     func showNewAdd(){
         let newVC = AddNewViewController()
         self.presentViewController(newVC, animated: true, completion: nil)
@@ -199,6 +205,19 @@ class ListViewController: UIViewController{
         }
     }
     
+    func imagePicker(){
+        let pickerC = UIImagePickerController()
+        
+        pickerC.delegate = self
+  
+        self.presentViewController(pickerC, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        bgimg = image
+        self.dismissViewControllerAnimated(true, completion: nil);
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -208,12 +227,19 @@ class ListViewController: UIViewController{
         //stackView_stack.frame = self.view.frame
         btn_add.center.x = self.view.center.x
         table_listTable.center.x = self.view.center.x
-        
+        /*
         label_list.text = "List"
         label_list.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
         label_list.backgroundColor = UIColor.clearColor()
         label_list.textColor = red_light
-        self.view.addSubview(label_list)
+        tap.addTarget(self, action: "imagePicker")
+        label_list.addGestureRecognizer(tap)
+        */
+        btn_list.setTitle("List", forState: .Normal)
+        btn_list.setTitleColor(red_light, forState: .Normal)
+        btn_list.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 50)
+        btn_list.addTarget(self, action: "imagePicker", forControlEvents: .TouchUpInside)
+        self.view.addSubview(btn_list)
         
         table_listTable.dataSource = self
         table_listTable.delegate = self
@@ -232,8 +258,7 @@ class ListViewController: UIViewController{
         self.view.addSubview(btn_edit)
         
         //self.view.addSubview(stackView_stack)
-        let bgimg = UIImage(named: "bg")
-        let bg = UIImageView(frame: screen)
+
         bg.image = bgimg
         
         let blurEffect = UIBlurEffect(style: .Light)
@@ -259,6 +284,7 @@ class ListViewController: UIViewController{
         
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
     
     private func queryLists(){
         
@@ -293,6 +319,7 @@ class ListViewController: UIViewController{
         
         table_listTable.reloadData()
         
+        bg.image = bgimg
     }
     
     override func didReceiveMemoryWarning() {
