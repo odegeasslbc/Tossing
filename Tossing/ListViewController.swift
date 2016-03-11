@@ -78,7 +78,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate, TTable
                     table_listTable.reloadRowsAtIndexPaths(table_listTable.indexPathsForVisibleRows!, withRowAnimation: .None)
                     }, completion: {
                     finished in
-                        table_listTable.center = CGPointMake(screen.width*3/2, screen.height/2-20)
+                        table_listTable.center = CGPointMake(screen.width*2, screen.height/2-20)
 
                         UIView.animateWithDuration(0.5, animations: {
                             table_listTable.center = CGPointMake(screen.width/2, screen.height/2-20)
@@ -187,10 +187,13 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate, TTable
 
 }
 
-class ListViewController: UIViewController{
 
-    @IBOutlet weak var btn_list: FlatButton!
+
+
+class ListViewController: UIViewController, UINavigationControllerDelegate{
     
+    @IBOutlet weak var btn_list: FlatButton!
+
     let animeView_effectView = UIView(frame: CGRectMake(0, 0, 1, 1))
     
     let btn_edit = TossButton(frame: CGRectMake(screen.width-110, 30, 100, 55), normalText: "Edit", highlightText: "Editing")
@@ -223,7 +226,6 @@ class ListViewController: UIViewController{
         }
     }
     
-    
     private func queryLists(){
         
         lists.removeAll(keepCapacity: false)
@@ -250,7 +252,6 @@ class ListViewController: UIViewController{
         //table_listTable.reloadData()
         
     }
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()

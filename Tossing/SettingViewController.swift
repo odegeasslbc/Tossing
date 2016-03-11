@@ -34,9 +34,29 @@ func saveImage(image:UIImage){
     _ = imgData?.writeToFile(imagePath, atomically: true)
 }
 
+extension SettingViewController: UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func systemImagePicker(){
+        let pickerC = UIImagePickerController()
+        
+        pickerC.delegate = self
+        
+        self.presentViewController(pickerC, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        bgimg = image
+
+        bg_view.image = bgimg
+
+        saveImage(bgimg!)
+
+        self.dismissViewControllerAnimated(true, completion: nil);
+    }
+    
+}
+
+
 extension SettingViewController: ImagePickerDelegate{
-    
-    
     
     func imagePicker(){
         let pickerC = ImagePickerController()
@@ -132,7 +152,7 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
         btn_imgPicker.frame = CGRectMake(screen.width-90, 170, 80, 50)
         //btn_imgPicker.backgroundColor = light
         btn_imgPicker.setTitle("pick", forState: .Normal)
-        btn_imgPicker.addTarget(self, action: "imagePicker", forControlEvents: .TouchUpInside)
+        btn_imgPicker.addTarget(self, action: "systemImagePicker", forControlEvents: .TouchUpInside)
         btn_imgPicker.setTitleColor(dark_7, forState: .Normal)
         btn_imgPicker.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 25)
         
