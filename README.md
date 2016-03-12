@@ -18,8 +18,7 @@ And you have another list called "working schedual", then you add "prepare for c
 ### Database 
 #### Sqlite by FMDB
 Use sqlite as database and operate by an implementation of FMDB:
-<pre><code>
-     private func initDB(){
+<pre><code>private func initDB(){
         let defaultManager = NSFileManager.defaultManager()
         dbFilePath = defaultManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!.URLByAppendingPathComponent("tosse.db").path!
         print(dbFilePath)
