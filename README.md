@@ -13,6 +13,12 @@ it will randomly return you an item to help you decide what to eat for the meal.
 And you have another list called "working schedual", then you add "prepare for cs exam", "writing the paper",
 "nap for 10 min" and "play basketball to relax", it can help you make a schedual what to do next, but randomly!
 
+Demo of the app:
+
+![alt tag](https://cloud.githubusercontent.com/assets/9973368/13720484/1a1b77f6-e7d8-11e5-870d-c14b6a376080.gif)
+
+![alt tag](https://cloud.githubusercontent.com/assets/9973368/13720432/7edbd200-e7d6-11e5-8b98-cb072ea2d198.gif)
+
 ## Technical Specs
 
 ###1. Database 
@@ -202,7 +208,7 @@ class CircleTransitionForwardAnimator: NSObject, UIViewControllerAnimatedTransit
     }
 }
 ```
-
+![alt tag](https://cloud.githubusercontent.com/assets/9973368/13720435/8953bba8-e7d6-11e5-8f34-2f5a546cdff6.gif)
 ####2. Animation of UIViews
 ```swift
     func check() {
@@ -226,6 +232,7 @@ class CircleTransitionForwardAnimator: NSObject, UIViewControllerAnimatedTransit
         
     }
 ```
+![alt tag](https://cloud.githubusercontent.com/assets/9973368/13720434/85e0da46-e7d6-11e5-8919-16192ba729a3.gif)
 
 Animation with more configurations
 ```swift
@@ -236,7 +243,7 @@ Animation with more configurations
             }, completion: nil)
     }
 ```
-
+![alt tag](https://cloud.githubusercontent.com/assets/9973368/13720433/83e48e86-e7d6-11e5-8ad3-f1df76795ef8.gif)
 ###3. Force Touch Features
 
 ####1. Pop and Peak Preview
