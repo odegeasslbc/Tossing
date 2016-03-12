@@ -18,7 +18,8 @@ And you have another list called "working schedual", then you add "prepare for c
 ### Database 
 #### Sqlite by FMDB
 Use sqlite as database and operate by an implementation of FMDB:
-<pre><code>private func initDB(){
+```swift
+    private func initDB(){
         let defaultManager = NSFileManager.defaultManager()
         dbFilePath = defaultManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!.URLByAppendingPathComponent("tosse.db").path!
         print(dbFilePath)
@@ -43,9 +44,8 @@ Use sqlite as database and operate by an implementation of FMDB:
             personDB.close()
         }
     }
-</code></pre>
-
-<pre></code>
+```
+```swift
         let db = FMDatabase(path: dbFilePath)
         guard db.open() 
         else {
@@ -72,4 +72,4 @@ Use sqlite as database and operate by an implementation of FMDB:
             db.close()
             print("Error:\(error)")
         }
-</code></pre>
+```
