@@ -247,6 +247,7 @@ Animation with more configurations
 ###3. Force Touch Features
 
 ####1. Pop and Peak Preview
+![alt tag](https://cloud.githubusercontent.com/assets/9973368/13720590/4f21c966-e7db-11e5-96cf-bbe3526e781d.gif)
 ```swift
 extension ListViewController: UIViewControllerPreviewingDelegate {
     
@@ -274,6 +275,8 @@ extension ListViewController: UIViewControllerPreviewingDelegate {
     }
 }
 ```
+![alt tag](https://cloud.githubusercontent.com/assets/9973368/13720602/a729340a-e7db-11e5-8ef7-00bb3c461ce4.gif)
+
 ####2. Shortcut and Quick Start
 It requires a override of several functions in Appdelegate class.
 An extra DIY function to receive and manage a shortcut request is highly recommend as a transit
