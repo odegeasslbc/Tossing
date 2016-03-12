@@ -44,3 +44,32 @@ Use sqlite as database and operate by an implementation of FMDB:
         }
     }
 </code></pre>
+
+<pre></code>
+        let db = FMDatabase(path: dbFilePath)
+        guard db.open() 
+        else {
+            print("Error:\(db.lastErrorMessage())")
+            return
+        }
+                
+        let list = label_new.text
+                
+        for item in items{
+            let insertPersonStatement = "INSERT INTO ITEMS (NAME,HOST) VALUES (?,?)"
+            do{
+                try db.executeUpdate(insertPersonStatement, values: [item,list ?? NSNull()])
+            }catch{
+                print("Error:\(error)")
+            }
+        }
+        
+        let insertPersonStatement = "INSERT INTO LISTS (TITLE, STAR) VALUES (?,?)"
+        do{
+            try db.executeUpdate(insertPersonStatement, values: [list!, false ?? NSNull()])
+            db.close()
+        }catch{
+            db.close()
+            print("Error:\(error)")
+        }
+</code></pre>
