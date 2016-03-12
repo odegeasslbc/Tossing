@@ -337,8 +337,6 @@ An extra DIY function to receive and manage a shortcut request is highly recomme
         } else {
             // Fallback on earlier versions
         }
-
-        
         return launchedFromShortcut
     }
 ```
