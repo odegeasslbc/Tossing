@@ -16,7 +16,7 @@ And you have another list called "working schedual", then you add "prepare for c
 ## Technical Specs
 
 ### Database 
-#### 1. Sqlite by FMDB
+####1. Sqlite by FMDB
 Use sqlite as database and operate by an implementation of FMDB:
 ```swift
     private func initDB(){
@@ -151,4 +151,88 @@ Accordingly, we cannot perform complex operations and manage a large amount of d
         }
     }
 ```
+### UIDesign and Animation
 
+####1. Animation between UIViewControllers
+```swift
+class CircleTransitionForwardAnimator: NSObject, UIViewControllerAnimatedTransitioning{
+    weak var transitionContext: UIViewControllerContextTransitioning?
+    
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+        return 0.7
+    }
+    
+    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+        // 1
+        self.transitionContext = transitionContext
+        
+        // 2
+        let containerView = transitionContext.containerView()
+        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! ListViewController
+        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as! SettingViewController
+        let button = fromViewController.btn_list
+        
+        UIView.animateWithDuration(0.1, delay: 0.7, options: UIViewAnimationOptions.CurveLinear, animations: {
+            fromViewController.blurView.frame = blurInitialFrame
+        }, completion: nil)
+        // 3
+        containerView!.addSubview(toViewController.view)
+        
+        // 4
+        let circleMaskPathInitial = UIBezierPath(ovalInRect: button.frame)
+        let circleMaskPathFinal = UIBezierPath(ovalInRect: CGRectInset(button.frame, -1000, -1000))
+        
+        // 5
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = circleMaskPathFinal.CGPath
+        toViewController.view.layer.mask = maskLayer
+        
+        // 6
+        let maskLayerAnimation = CABasicAnimation(keyPath: "path")
+        maskLayerAnimation.fromValue = circleMaskPathInitial.CGPath
+        maskLayerAnimation.toValue = circleMaskPathFinal.CGPath
+        maskLayerAnimation.duration = self.transitionDuration(self.transitionContext!)
+        maskLayerAnimation.delegate = self
+        maskLayer.addAnimation(maskLayerAnimation, forKey: "CircleAnimation")
+    }
+    
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        self.transitionContext?.completeTransition(!self.transitionContext!.transitionWasCancelled())
+        self.transitionContext?.viewControllerForKey(UITransitionContextFromViewControllerKey)?.view.layer.mask = nil
+    }
+}
+```
+
+####2. Animation of UIViews
+```swift
+    func check() {
+        queryLists()
+        
+        UIView.animateWithDuration(0.5, animations: {
+            table_listTable.center = CGPointMake(-screen.width/2, screen.height/2-20)
+            }, completion:
+            {finished in
+                UIView.animateWithDuration(0.1, animations: {
+                    table_listTable.reloadRowsAtIndexPaths(table_listTable.indexPathsForVisibleRows!, withRowAnimation: .None)
+                    }, completion: {
+                    finished in
+                        table_listTable.center = CGPointMake(screen.width*2, screen.height/2-20)
+
+                        UIView.animateWithDuration(0.5, animations: {
+                            table_listTable.center = CGPointMake(screen.width/2, screen.height/2-20)
+                            }, completion: nil)
+                })
+        })
+        
+    }
+```
+
+Animation with more configurations
+```swift
+    func show(){
+        showing = true
+        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.frame = self.finalFrame!
+            }, completion: nil)
+    }
+```
