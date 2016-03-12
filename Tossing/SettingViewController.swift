@@ -81,6 +81,7 @@ extension SettingViewController: ImagePickerDelegate{
     func doneButtonDidPress(images: [UIImage]){
         bgimg = images[0]
         bg_view.image = bgimg
+        bg.image = bgimg
         saveImage(bgimg!)
         self.dismissViewControllerAnimated(true, completion: nil);
     }
@@ -94,13 +95,17 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
 
     @IBOutlet weak var btn_back: UIButton!
     
-    let label_blur = UILabel(frame: CGRectMake(30, 100, screen.width/2, 50))
-    let label_bg = UILabel(frame: CGRectMake(30, 170, screen.width/2, 50))
+    let label_blur = UILabel(frame: CGRectMake(70, 100, screen.width/2, 30))
     
-    let blurSwitch = MaterialSwitch()
+    let label_bg = UILabel(frame: CGRectMake(70, 160, screen.width/2, 50))
+    
+    let btn_imgpicker_frame = CGRectMake(screen.width-90, 170, 80, 50)
+    
+    var bg_view = UIImageView(frame: CGRectMake(10, 100, 54, 96))
+
+    var blurSwitch = MaterialSwitch()
     let btn_imgPicker = FlatButton()
     
-    var bg_view = UIImageView(frame: CGRectMake(30, 220, 90, 160))
     
     @IBAction func back(sender: AnyObject) {
         //self.dismissViewControllerAnimated(true, completion: nil)
@@ -126,17 +131,29 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
             saveBlur("no")
         }
     }
+    @IBOutlet weak var bg: UIImageView!
+    @IBOutlet weak var sysswitch: UISwitch!
     
+    @IBAction func `switch`(sender: AnyObject) {
+        
+        if sysswitch.enabled {
+            shouldBlur = true
+            saveBlur("yes")
+        }else{
+            shouldBlur = false
+            saveBlur("no")
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        btn_back.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        btn_back.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30)
-        btn_back.backgroundColor = light
-        self.view.backgroundColor = red
+        //btn_back.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        //btn_back.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Light", size: 30)
+        //btn_back.backgroundColor = light
+        //self.view.backgroundColor = red
         
         label_blur.text = "Blur"
-        label_bg.text = "Background paper"
+        label_bg.text = "Wallpaper"
         
         self.title = "settingVC"
         
@@ -145,11 +162,12 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
         }else{
             blurSwitch.switchState = .Off
         }
+        
         blurSwitch.switchSize = .Large
         blurSwitch.center = CGPoint(x: screen.width-50, y: 125)
         blurSwitch.delegate = self
         
-        btn_imgPicker.frame = CGRectMake(screen.width-90, 170, 80, 50)
+        btn_imgPicker.frame = btn_imgpicker_frame
         //btn_imgPicker.backgroundColor = light
         btn_imgPicker.setTitle("pick", forState: .Normal)
         btn_imgPicker.addTarget(self, action: "systemImagePicker", forControlEvents: .TouchUpInside)
@@ -158,6 +176,9 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
         
         bg_view.image = bgimg
         
+        btn_back.setTitleColor(light, forState: .Normal)
+        
+        
         self.view.addSubview(bg_view)
         
         self.view.addSubview(btn_imgPicker)
@@ -165,6 +186,11 @@ class SettingViewController: UIViewController, MaterialSwitchDelegate {
         
         self.view.addSubview(label_blur)
         self.view.addSubview(label_bg)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.view.bringSubviewToFront(blurSwitch)
+
     }
 
     override func didReceiveMemoryWarning() {
