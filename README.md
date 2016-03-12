@@ -1,7 +1,7 @@
 # Tossing
 A decision-make helper
 
-#### Description:
+## Description:
 You can use this app to create many "lists" which each list contains several choices, 
 this app will return you one choice randomly to help you make the decision, 
 just like tossing a coin.
@@ -106,6 +106,49 @@ For the convenience of saving only one background image, I simply use CoreData p
         }
         bg.image = bgimg
     }
-    
-
 ```
+
+#### 3. Plist (property list)
+Saving settings and configurations into a plist is an easy and fast way to keep light data instead of using a database.
+Accordingly, we cannot perform complex operations and manage a large amount of data in table by such a method.
+
+```swift
+
+    func saveBlur(blur:String){
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("Theme.plist")
+        let data: NSMutableArray = [blur]
+        
+        data.writeToFile(path, atomically: true)
+    }
+    
+    func loadBlur() {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("Theme.plist")
+        let fileManager = NSFileManager.defaultManager()
+        
+        // Check if file exists
+        if(!fileManager.fileExistsAtPath(path))
+        {
+            print("no")
+            // If it doesn't, copy it from the default file in the Resources folder
+            let bundle = NSBundle.mainBundle().pathForResource("Theme", ofType: "plist")
+            do{
+                try fileManager.copyItemAtPath(bundle!, toPath: path)
+            }catch{
+                print(error)
+            }
+        }
+        let data = NSMutableArray(contentsOfFile: path)
+        if(data != nil){
+            if data![0] as! String == "no"{
+                shouldBlur = false
+            }else{
+                shouldBlur = true
+            }
+        }
+    }
+```
+
