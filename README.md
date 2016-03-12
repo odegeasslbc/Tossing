@@ -16,7 +16,7 @@ And you have another list called "working schedual", then you add "prepare for c
 ## Technical Specs
 
 ### Database 
-#### Sqlite by FMDB
+#### 1. Sqlite by FMDB
 Use sqlite as database and operate by an implementation of FMDB:
 ```swift
     private func initDB(){
@@ -72,4 +72,40 @@ Use sqlite as database and operate by an implementation of FMDB:
             db.close()
             print("Error:\(error)")
         }
+```
+
+#### 2. CoreData
+For the convenience of saving only one background image, I simply use CoreData provided by Apple.
+
+** Note that a large number of images is not recommended to store in sandbox, saving the url of each image is prefered, for both storage concern and efficiency concern.
+
+```swift
+    func getDocumentsURL() -> NSURL {
+        let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        return documentsURL
+    }
+
+    func fileInDocumentsDirectory(filename: String) -> String {
+    
+        let fileURL = getDocumentsURL().URLByAppendingPathComponent(filename)
+        return fileURL.path!
+    
+    }
+
+    func saveImage(image:UIImage){
+        let imgData = UIImagePNGRepresentation(image)
+        let imagePath = fileInDocumentsDirectory("background_image")
+        _ = imgData?.writeToFile(imagePath, atomically: true)
+    }
+
+    func loadImage() {
+        let imagePath = fileInDocumentsDirectory("background_image")
+        let image = UIImage(contentsOfFile: imagePath)
+        if(image != nil){
+            bgimg = image
+        }
+        bg.image = bgimg
+    }
+    
+
 ```
