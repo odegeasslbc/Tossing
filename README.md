@@ -15,7 +15,7 @@ And you have another list called "working schedual", then you add "prepare for c
 
 ## Technical Specs
 
-### Database 
+###1. Database 
 ####1. Sqlite by FMDB
 Use sqlite as database and operate by an implementation of FMDB:
 ```swift
@@ -151,7 +151,7 @@ Accordingly, we cannot perform complex operations and manage a large amount of d
         }
     }
 ```
-### UIDesign and Animation
+###2. UIDesign and Animation
 
 ####1. Animation between UIViewControllers
 ```swift
@@ -236,3 +236,112 @@ Animation with more configurations
             }, completion: nil)
     }
 ```
+
+###3. Force Touch Features
+
+####1. Pop and Peak Preview
+```swift
+extension ListViewController: UIViewControllerPreviewingDelegate {
+    
+    //pop
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        showViewController(previewVC!, sender: self)
+    }
+    
+    //peak
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = table_listTable.indexPathForRowAtPoint(location),
+            cell = table_listTable.cellForRowAtIndexPath(indexPath) else{ return nil}
+        
+        let title = cell.textLabel?.text
+        previewVC = DetailViewController(title: title!)
+        
+        previewVC!.preferredContentSize = CGSize(width: screen.width-60, height: screen.height/3)
+        if #available(iOS 9.0, *) {
+            previewingContext.sourceRect = cell.frame
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        return previewVC
+    }
+}
+```
+####2. Shortcut and Quick Start
+It requires a override of several functions in Appdelegate class.
+An extra DIY function to receive and manage a shortcut request is highly recommend as a transit
+
+```swift
+@available(iOS 9.0, *)
+    func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        var handled = false
+        //Get type string from shortcutItem
+        if let shortcutType = ShortcutType.init(rawValue: shortcutItem.type) {
+            
+            switch shortcutType {
+            case .quick:
+                
+                let db = FMDatabase(path: dbFilePath)
+                guard db.open() else {
+                    print("Error:\(db.lastErrorMessage())")
+                    return handled
+                }
+                
+                let queryPersonStatement = "SELECT * FROM LISTS"
+                
+                var favorList = List(title:"",star: true)
+                
+                lists.removeAll(keepCapacity: false)
+                if let resultSet = db.executeQuery(queryPersonStatement,withArgumentsInArray: nil){
+                    while resultSet.next(){
+                        let title = resultSet.stringForColumn("TITLE")
+                        let star = resultSet.boolForColumn("STAR")
+                        
+                        lists.append(List(title: title,star: star))
+                        if(star){
+                            favorList = List(title: title,star: star)
+                        }
+                    }
+                }
+                db.close()
+                if(favorList.title != ""){
+                    let detailVC = DetailViewController(title: favorList.title)
+                    window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+                    window?.rootViewController?.presentViewController(detailVC, animated: false, completion: nil)
+                }else{
+                    let alert = SCLAlertView()
+                    alert.showWarning("Pick a Favoriate", subTitle: "you can choose a list to quick start in editing mode", closeButtonTitle: "Ok, get it!", duration: 5)
+                }
+                handled = true
+            case .add:
+                let addVC = AddNewViewController()
+                window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+                window?.rootViewController?.presentViewController(addVC, animated: false, completion: nil)
+                handled = true
+            }
+        }
+        return handled
+    }
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        
+        initDB()
+        
+        var launchedFromShortcut = false
+        if #available(iOS 9.0, *) {
+            if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+                launchedFromShortcut = true
+                handleShortCutItem(shortcutItem)
+                
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+
+        
+        return launchedFromShortcut
+    }
+```
+
+
+
